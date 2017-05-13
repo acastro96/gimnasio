@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <body>
 
@@ -29,31 +30,28 @@
                             <h3>Rutina</h3>
                             <div class="row">
                                 <div class="form-group col-lg-6">
-                                    <label for="nombreRut">Nombre Rutina</label>
-                                    <h:inputText class="form-control" value="#{rutinasBean.nombre}" id="nombreRut" maxlength="50"/>
-                                    <small id="nombreRut" class="form-text text-muted">Obligatorio</small>
+                                    <h:inputText class="form-control form-white" a:placeholder="Nombre Rutina" value="#{rutinasBean.nombre}" id="nombreRut" maxlength="50"/>
+                                    <small id="nombreRut" class="form-text text-muted white">Obligatorio</small>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label for="codigoRut">Codigo Rutina</label>
-                                    <h:inputText class="form-control" value="#{rutinasBean.codigo}" id="codigoRut" maxlength="50"/>
-                                    <small id="codigoRut" class="form-text text-muted">Obligatorio</small>
+                                    <h:inputText class="form-control form-white" a:placeholder="Código Rutina" value="#{rutinasBean.codigo}" id="codigoRut" maxlength="50"/>
+                                    <small id="codigoRut" class="form-text text-muted white">Obligatorio</small>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-6">
-                                    <label for="repeticionesRut">Repeticiones en la Rutina</label>
-                                    <h:selectOneMenu class="form-control" id="repeticionesRut" value="#{rutinasBean.repeticiones}">
+                                    <h:selectOneMenu class="form-control form-white" id="repeticionesRut" value="#{rutinasBean.repeticiones}">
                                         <f:selectItem itemLabel="1" itemValue="1" />
                                         <f:selectItem itemLabel="2" itemValue="2" />
                                         <f:selectItem itemLabel="3" itemValue="3" />
                                         <f:selectItem itemLabel="4" itemValue="4" />
                                         <f:selectItem itemLabel="5" itemValue="5" />
                                     </h:selectOneMenu>
-                                    <small id="repeticionesRut" class="form-text text-muted"></small>
+                                    <small id="repeticionesRut" class="form-text text-muted white">Cantidad de Repeticiones</small>
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label for="caloriasRut">Calorias Rutina</label>
-                                    <h:selectOneMenu class="form-control" id="caloriasRut" value="#{rutinasBean.calorias}">
+                                    <h:selectOneMenu class="form-control form-white" id="caloriasRut" value="#{rutinasBean.calorias}">
                                         <f:selectItem itemLabel="50" itemValue="50" />
                                         <f:selectItem itemLabel="100" itemValue="100" />
                                         <f:selectItem itemLabel="150" itemValue="150" />

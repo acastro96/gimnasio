@@ -172,7 +172,6 @@ jQuery(function($) {
         
         $('#accordion .desplegar').hide();
         $('#accordion h3').click(function(){
-            $('#accordion .desplegar').hide();
             $('#accordion h3').removeClass('white');
             $(this).siblings('.desplegar').slideToggle('fade');
             $(this).addClass('white');

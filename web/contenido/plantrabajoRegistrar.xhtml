@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <body>
 
@@ -13,104 +14,105 @@
 
             <ui:define name="content">
                 <div style="margin-top: 120px"></div>
-                <c:forEach items="${loginBean.listRecursos}" var="rec">
+                <!--<c:forEach items="${loginBean.listRecursos}" var="rec">
                     <c:if  test="#{rec eq 'plantrabajoConsultar'}" var="bool">
                         <c:set var="val" value="true"/>
                     </c:if>
                 </c:forEach>
-                <c:if  test="#{val eq true}">
-                    <h:form id="formRegistarPlan">
-                        <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true"  />
-                        <div class="container">
-                            <div id="accordion">
-                                <!--Esta es la información que se va insertar en la tabla Persona-->
-                                <h3>Plan de Trabajo</h3>
-                                <div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-4">
-                                            <label for="nombre">Nombre</label>
-                                            <h:inputText class="form-control" value="#{planTrabajoBean.nombre}" id="nombre" maxlength="50"/>
-                                            <small id="nombre" class="form-text text-muted">Obligatorio</small>
-                                        </div>
-                                        <div class="form-group col-lg-4">
-                                            <label for="codigo">Código</label>
-                                            <h:inputText class="form-control" value="#{planTrabajoBean.codigo}" id="codigo" maxlength="30"/>
-                                            <small id="codigo" class="form-text text-muted">Obligatorio</small>
-                                        </div>
-                                        <div class="form-group col-lg-4">
-                                            <h:outputText  class="control-label" value="Tipo Plan de Trabajo"></h:outputText >
-                                            <h:selectOneMenu id="slcTipoPlan" class="form-control"  value="#{planTrabajoBean.tipoEjercicio}">
-                                                <f:selectItems value="#{planTrabajoBean.parTipoPlan.entrySet()}" var="ltstTPlan" itemLabel="#{ltstTPlan.value}" itemValue="#{ltstTPlan.key}"></f:selectItems>
-                                            </h:selectOneMenu>
-                                        </div>
+                <c:if  test="#{val eq true}">-->
+                <h:form id="formRegistarPlan">
+                    <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true"  />
+                    <div class="container">
+                        <div id="accordion">
+                            <!--Esta es la información que se va insertar en la tabla Persona-->
+                            <h3>Plan de Trabajo</h3>
+                            <div>
+                                <div class="row">
+                                    <div class="form-group col-lg-4">
+                                        <h:inputText class="form-control form-white" a:placeholder="Nombre Plan de Trabajo" value="#{planTrabajoBean.nombre}" id="nombre" maxlength="50"/>
+                                        <small id="nombre" class="form-text text-muted white">Obligatorio</small>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-12">
-                                            <label for="descripcion">Descripción</label>
-                                            <h:inputTextarea rows="5" class="form-control" value="#{planTrabajoBean.descripcion}" id="descripcion" />
-                                            <small id="descripcion" class="form-text">Obligatorio</small>
-                                        </div>
+                                    <div class="form-group col-lg-4">
+                                        <h:inputText class="form-control form-white" a:placeholder="Código Plan de Trabajo" value="#{planTrabajoBean.codigo}" id="codigo" maxlength="30"/>
+                                        <small id="codigo" class="form-text text-muted white">Obligatorio</small>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <h:selectOneMenu id="slcTipoPlan" class="form-control form-white" value="#{planTrabajoBean.tipoEjercicio}">
+                                            <f:selectItems value="#{planTrabajoBean.parTipoPlan.entrySet()}" var="ltstTPlan" itemLabel="#{ltstTPlan.value}" itemValue="#{ltstTPlan.key}"></f:selectItems>
+                                        </h:selectOneMenu>
+                                        <small id="tipoplan" class="form-text text-muted white">Tipo Plan de Trabajo</small>
                                     </div>
                                 </div>
-                                <div>
-                                    <h:panelGrid id="listaRutinas" class="col-lg-12">
-                                        <h:panelGroup rendered="true">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12" style="text-align: right;">
-                                                    <label for="agregarRut">Agregar Rutina</label>
-                                                    <h:commandLink>
-                                                        <f:ajax event="click" listener="#{planTrabajoBean.agregarRutina()}" execute="@form" render="formRegistarPlan:listaRutinas"/>
-                                                        <i class="fa fa-plus"/>
-                                                    </h:commandLink>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
-                                                    <section class="invoice">
-                                                        <h:dataTable id="tbRutinas" value="#{planTrabajoBean.listaRutinas}" var="list" class="table table-bordered">
-                                                            <h:column id="nombreRut">
-                                                                <f:facet name="header">Nombre</f:facet>
-                                                                <h:outputText value="#{list.rutNombre}"/>
-                                                            </h:column>
-                                                            <h:column id="codigoRut">
-                                                                <f:facet name="header">Codigo</f:facet>
-                                                                <h:outputText value="#{list.rutCodigo}"/>
-                                                            </h:column>
-                                                            <h:column id="repeticionesRut">
-                                                                <f:facet name="header">Repeticiones</f:facet>
-                                                                <h:outputText value="#{list.rutRepeticiones}"/>
-                                                            </h:column>
-                                                            <h:column id="caloriasRut">
-                                                                <f:facet name="header">Calorias Trabajadas</f:facet>
-                                                                <h:outputText value="#{list.rutCalorias}"/>
-                                                            </h:column>
-                                                            <h:column id="video">
-                                                                <f:facet name="header">Video</f:facet>
-                                                                <h:outputText value="#{list.estado}"/>
-                                                            </h:column>
-                                                        </h:dataTable>
-                                                    </section>
-                                                </div>
-                                            </div>
-                                        </h:panelGroup>
-                                    </h:panelGrid>
+                                <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        <h:inputTextarea rows="5" class="form-control form-white" a:placeholder="Descripción del Plan de trabajo" value="#{planTrabajoBean.descripcion}" id="descripcion" />
+                                        <small id="descripcion" class="form-text white">Obligatorio</small>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="text-center">
-                                <!--Cuando le de click a este boton va a llevarlo al metodo de insertar instructor que esta en el Bean Instructor-->
-                                <h:commandLink action="#{instructoresBean.ingresarInstructor()}" class="btn btn-primary">
-                                    <i class="fa fa-save"/> Guardar
-                                </h:commandLink>
+                            <div>
+                                <h:panelGrid id="listaRutinas" class="col-lg-12">
+                                    <h:panelGroup>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12" style="text-align: right;">
+                                                <label for="agregarRut" class="white">Agregar Rutina</label>
+                                                <!-- Esto debe llamar a una modal no a este metodo, se tiene que revisar-->
+                                                <h:commandLink>
+                                                    <f:ajax event="click" listener="#{planTrabajoBean.agregarRutina()}" execute="@form" render="formRegistarPlan:listaRutinas"/>
+                                                    <i class="fa fa-plus"/>
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <section class="invoice">
+                                                    <h:dataTable id="tbRutinas" value="#{planTrabajoBean.listaRutinas}" var="list" class="table table-bordered">
+                                                        <h:column id="nombreRut">
+                                                            <f:facet name="header" class="white"><h:outputText class="white" value="Nombre"/></f:facet>
+                                                            <h:outputText class="white" value="#{list.rutNombre}"/>
+                                                        </h:column>
+                                                        <h:column id="codigoRut">
+                                                            <f:facet name="header" class="white"><h:outputText class="white" value="Código"/></f:facet>
+                                                            <h:outputText class="white" value="#{list.rutCodigo}"/>
+                                                        </h:column>
+                                                        <h:column id="repeticionesRut">
+                                                            <f:facet name="header"><h:outputText class="white" value="Repeticiones"/></f:facet>
+                                                            <h:outputText class="white" value="#{list.rutRepeticiones}"/>
+                                                        </h:column>
+                                                        <h:column id="caloriasRut">
+                                                            <f:facet name="header" class="white"><h:outputText class="white" value="Calorias Trabajadas"/></f:facet>
+                                                            <h:outputText class="white" value="#{list.rutCalorias}"/>
+                                                        </h:column>
+                                                        <h:column id="video">
+                                                            <f:facet name="header" class="white"><h:outputText class="white" value="Video"/></f:facet>
+                                                            <h:commandLink>
+                                                                <f:ajax event="click" listener="#{rutinasBean.mostrarVideo()}"/>
+                                                                <i class="fa fa-video-camera"/>
+                                                            </h:commandLink>
+                                                        </h:column>
+                                                    </h:dataTable>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+                                </h:panelGrid>
                             </div>
                         </div>
-                    </h:form>
-                </c:if>
+
+                        <div class="text-center">
+                            <!--Cuando le de click a este boton va a llevarlo al metodo de ingresar plan trabajo que esta en el Bean Instructor-->
+                            <h:commandLink action="#{planTrabajoBean.ingresarPlanTrabajo()}" class="btn btn-blue">
+                                <i class="fa fa-save"/> Guardar
+                            </h:commandLink>
+                        </div>
+                    </div>
+                </h:form>
+                <!--</c:if>
                 <c:if  test="#{val eq false}">
                     <script>
                         document.location.href = 'index2.html';
                     </script>
-                </c:if>
+                </c:if>-->
             </ui:define>
 
         </ui:composition>

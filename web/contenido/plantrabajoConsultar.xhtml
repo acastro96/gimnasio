@@ -14,216 +14,209 @@
 
             <ui:define name="content">
                 <div style="margin-top: 120px"></div>
-                <c:forEach items="${loginBean.listRecursos}" var="rec">
+                <!--<c:forEach items="${loginBean.listRecursos}" var="rec">
                     <c:if  test="#{rec eq 'plantrabajoConsultar'}" var="bool">
                         <c:set var="val" value="true"/>
                     </c:if>
                 </c:forEach>
-                <c:if  test="#{val eq true}">
-                    <h:form id="formPlanConsulta">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p:messages id="mensaje" showDetail="true"  autoUpdate="true" closable="true" />
-                                </div>
+                <c:if  test="#{val eq true}">-->
+                <h:form id="formPlanConsulta">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p:messages id="mensaje" showDetail="true"  autoUpdate="true" closable="true" />
                             </div>
-                            <h:panelGrid id="consulta" class="col-lg-12">
-                                <h:panelGroup rendered="#{!planTrabajoBean.detalle}">
-                                    <div class="nav-tabs-custom">
-                                        <ul class="nav nav-tabs">
-                                            <li class="active"><a href="#tab_1" data-toggle="tab">Codigo</a></li>
-                                            <li><a href="#tab_2" data-toggle="tab">Nombre</a></li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div class="tab-pane active" id="tab_1">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <div class="col-lg-3">
-                                                                <label for="txtCodigo">Codigo</label>
-                                                                <p:watermark for="txtCodigo" value="Digite Codigo" id="wtmCodigo" />
-                                                                <h:inputText id="txtCodigo" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.codigo}" class="form-control text-uppercase" maxlength="30">
-                                                                </h:inputText>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <label style="color: #ffffff">.</label>
-                                                                <p:commandLink  id="btnConsultaPorCodigo" action="#{planTrabajoBean.consultarPlanTrabajo(1)}" update="tbPlan" class="btn btn-primary form-control">
-                                                                    <i class="fa fa-search"></i>
-                                                                    <label>Consultar</label>
-                                                                </p:commandLink>
-                                                            </div>
-                                                        </div><!--group-->
-                                                    </div><!--col--> 
-                                                </div><!--row-->
-                                            </div><!-- /.tab-pane -->
-                                            <div class="tab-pane" id="tab_2">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <div class="col-lg-3">
-                                                                <label for="txtNombre">Nombre</label>
-                                                                <p:watermark for="txtNombre" value="Digite Nombre" id="wtmNombre" />
-                                                                <h:inputText id="txtNombre" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.nombre}" class="form-control text-uppercase" maxlength="30">
-                                                                </h:inputText>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <label style="color: #ffffff">.</label>
-                                                                <p:commandLink  id="btnConsultaPorNombre" action="#{planTrabajoBean.consultarPlanTrabajo(2)}" update="tbPlan" class="btn btn-primary form-control">
-                                                                    <i class="fa fa-search"></i>
-                                                                    <label>Consultar</label>
-                                                                </p:commandLink>
-                                                            </div>
-                                                        </div><!--group-->
-                                                    </div><!--col--> 
-                                                </div><!--row-->
-                                            </div><!-- /.tab-pane -->
-                                        </div><!-- /.tab-content -->
-                                    </div><!-- nav-tabs-custom -->
-
-                                    <div class="box box-primary">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title"><i class="fa fa-th"></i> Listado de Planes de Trabajo</h3>
-                                        </div><!-- /.box-header -->
-                                        <div class="box-body">
-
-                                            <h:dataTable id="tbPlan"  value="#{planTrabajoBean.lista}" var="ListaPlan" styleClass="table table-bordered">
-                                                <h:column>
-                                                    <f:facet name="header">#</f:facet>
-                                                </h:column>
-                                                <h:column>
-                                                    <f:facet name="header"><h:outputText value="Plan de Trabajo"></h:outputText></f:facet>
-                                                    <h:outputText value="#{ListaPlan.planNombre}"></h:outputText>
-                                                </h:column>
-                                                <h:column>
-                                                    <f:facet name="header"><h:outputText value="Descripcion"></h:outputText></f:facet>
-                                                    <h:outputText value="#{ListaPlan.planDescripcion}" />
-                                                </h:column>
-                                                <h:column>
-                                                    <f:facet name="header"><h:outputText value="Codigo"/></f:facet>
-                                                    <h:outputText value=" #{ListaPlan.planCodigo}" />
-                                                </h:column>
-                                                <h:column>
-                                                    <f:facet name="header"><i class="fa fa-search"/></f:facet>
-                                                    <h:commandLink>
-                                                        <f:ajax event="click" listener="#{planTrabajoBean.mostrarPlanTrabajo(ListaPlan.planId)}" execute="@form" render="formPlanConsulta:consulta formPlanConsulta:detalle"/>
-                                                        <i class="fa fa-search"/>
-                                                    </h:commandLink>
-                                                </h:column>
-                                            </h:dataTable>
-                                        </div><!-- /.box-body -->
-                                        <div class="box-footer clearfix">
-                                            <ul class="pagination pagination-sm no-margin pull-right">
-                                                <li><a href="#">&laquo;</a></li>
-                                                <li><a href="#">1</a></li>
-                                                <li><a href="#">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">&raquo;</a></li>
-                                            </ul>
-                                        </div>
-                                    </div><!-- /.box -->
-                                </h:panelGroup>
-                            </h:panelGrid>
-                            <h:panelGrid id="detalle" class="col-lg-12">
-                                <h:panelGroup rendered="#{planTrabajoBean.detalle}">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <section class="invoice">
-                                                <!-- title row -->
-                                                <div class="row">
-                                                    <div class="col-xs-12">
-                                                        <h2 class="page-header">
-                                                            <i class="fa fa-sliders"></i> Plan de Trabajo
-                                                            <small class="pull-right"></small>
-                                                        </h2>
-                                                    </div><!-- /.col -->
-                                                </div>
-                                                <p>&nbsp;</p>
-                                                <!-- info row -->
-                                                <div class="row invoice-info">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <p:messages closable="true" id="msgdet" showDetail="true" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-lg-4 col-xs-3">
-                                                                    <div class="form-group">
-                                                                        <label for="txtDetNombre">Nombre</label>
-                                                                        <h:inputText id="txtDetNombre" class="form-control" readonly="true" value="#{planTrabajoBean.nombre}"/>
-                                                                        <!--VALUE OK-->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4 col-xs-3">
-                                                                    <div class="form-group">
-                                                                        <label for="txtDetCodigo">Codigo</label>
-                                                                        <h:inputText id="txtDetCodigo" readonly="true" value="#{planTrabajoBean.codigo}" maxlength="30">
-                                                                        </h:inputText><!--VALUE OK-->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4 col-xs-3">
-                                                                    <div class="form-group">
-                                                                        <h:outputText  class="control-label" value="Tipo Plan de Trabajo"></h:outputText >
-                                                                        <h:selectOneMenu id="slcTipoPlan" class="form-control"  value="#{planTrabajoBean.tipoEjercicio}">
-                                                                            <f:selectItems value="#{planTrabajoBean}" var="listTipoPlan" itemValue="#{listTipoPlan.code}" itemLabel="#{listTipoPlan.nombreP}"></f:selectItems>
-                                                                        </h:selectOneMenu>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-lg-12 col-xs-12">
-                                                                    <div class="form-group">
-                                                                        <label for="txareaDescripcion">Descripcion</label>
-                                                                        <h:inputTextarea id="txareaDescripcion" class="form-control" readonly="true" value="#{planTrabajoBean.descripcion}"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12">
-                                                            <h:dataTable id="tbRutinas" value="#{planTrabajoBean.listaRutinas}" var="list" class="table table-bordered">
-
-                                                                <h:column id="nombreRut">
-                                                                    <f:facet name="header">Nombre</f:facet>
-                                                                    <h:outputText value="#{list.rutNombre}"/>
-                                                                </h:column>
-                                                                <h:column id="codigoRut">
-                                                                    <f:facet name="header">Codigo</f:facet>
-                                                                    <h:outputText value="#{list.rutCodigo}"/>
-                                                                </h:column>
-                                                                <h:column id="repeticionesRut">
-                                                                    <f:facet name="header">Repeticiones</f:facet>
-                                                                    <h:outputText value="#{list.rutRepeticiones}"/>
-                                                                </h:column>
-                                                                <h:column id="caloriasRut">
-                                                                    <f:facet name="header">Calorias Trabajadas</f:facet>
-                                                                    <h:outputText value="#{list.rutCalorias}"/>
-                                                                </h:column>
-                                                                <h:column id="estado">
-                                                                    <f:facet name="header">Video</f:facet>
-                                                                    <h:outputText value="#{list.estado}"/>
-                                                                </h:column>
-                                                            </h:dataTable>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- /.row -->
-                                            </section>
-                                        </div>
-                                    </div>
-                                </h:panelGroup>
-                            </h:panelGrid>
-
-
                         </div>
-                    </h:form>
-                </c:if>
+                        <h:panelGrid id="consulta" class="col-lg-12">
+                            <h:panelGroup rendered="#{!planTrabajoBean.detalle}">
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#tab_1" data-toggle="tab">Codigo</a></li>
+                                        <li><a href="#tab_2" data-toggle="tab">Nombre</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_1">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div style="margin-top: 20px"></div>
+                                                    <div class="col-lg-3">
+                                                        <label for="txtCodigo" class="white">Codigo</label>
+                                                        <p:watermark for="txtCodigo" value="Digite Codigo" id="wtmCodigo" />
+                                                        <h:inputText id="txtCodigo" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.codigo}" class="form-control text-uppercase" maxlength="30">
+                                                        </h:inputText>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label style="color: transparent">.</label>
+                                                        <p:commandLink  id="btnConsultaPorCodigo" action="#{planTrabajoBean.consultarPlanTrabajo(1)}" update="tbPlan" class="btn btn-blue form-control">
+                                                            <i class="fa fa-search"></i>
+                                                            <label>Consultar</label>
+                                                        </p:commandLink>
+                                                    </div>
+                                                </div><!--group-->
+                                            </div><!--row-->
+                                        </div><!-- /.tab-pane -->
+                                        <div class="tab-pane" id="tab_2">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div style="margin-top: 20px"></div>
+                                                    <div class="col-lg-3">
+                                                        <label for="txtNombre" class="white">Nombre</label>
+                                                        <p:watermark for="txtNombre" value="Digite Nombre" id="wtmNombre" />
+                                                        <h:inputText id="txtNombre" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.nombre}" class="form-control text-uppercase" maxlength="30">
+                                                        </h:inputText>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label style="color: transparent">.</label>
+                                                        <p:commandLink  id="btnConsultaPorNombre" action="#{planTrabajoBean.consultarPlanTrabajo(2)}" update="tbPlan" class="btn btn-blue form-control">
+                                                            <i class="fa fa-search"></i>
+                                                            <label>Consultar</label>
+                                                        </p:commandLink>
+                                                    </div>
+                                                </div><!--group-->
+                                            </div><!--row-->
+                                        </div><!-- /.tab-pane -->
+                                    </div><!-- /.tab-content -->
+                                </div><!-- nav-tabs-custom -->
+
+                                <div class="box box-primary" style="margin-top: 50px">
+                                    <div class="box-header with-border">
+                                        <h4 class="box-title white"><i class="fa fa-th white"></i> Listado de Planes de Trabajo</h4>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+                                        <h:dataTable id="tbPlan"  value="#{planTrabajoBean.lista}" var="ListaPlan" styleClass="table table-bordered">
+                                            <h:column>
+                                                <f:facet name="header"><h:outputText value="#" class="white" /></f:facet>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header"><h:outputText class="white" value="Plan de Trabajo"></h:outputText></f:facet>
+                                                <h:outputText class="white" value="#{ListaPlan.planNombre}"></h:outputText>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header"><h:outputText class="white" value="Descripcion"></h:outputText></f:facet>
+                                                <h:outputText class="white" value="#{ListaPlan.planDescripcion}" />
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header"><h:outputText class="white" value="Codigo"/></f:facet>
+                                                <h:outputText class="white" value="#{ListaPlan.planCodigo}" />
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header"><h:outputText value="Detalle" class="white" /></f:facet>
+                                                <h:commandLink>
+                                                    <f:ajax event="click" listener="#{planTrabajoBean.mostrarPlanTrabajo(ListaPlan.planId)}" execute="@form" render="formPlanConsulta:consulta formPlanConsulta:detalle"/>
+                                                    <i class="fa fa-search"/>
+                                                </h:commandLink>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div><!-- /.box-body -->
+                                    <div class="box-footer clearfix">
+                                        <ul class="pagination pagination-sm no-margin pull-right">
+                                            <li><a href="#">&laquo;</a></li>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">&raquo;</a></li>
+                                        </ul>
+                                    </div>
+                                </div><!-- /.box -->
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid id="detalle" class="col-lg-12">
+                            <h:panelGroup rendered="#{planTrabajoBean.detalle}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <section class="invoice">
+                                            <!-- title row -->
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h3 class="page-header white">
+                                                        <i class="fa fa-sliders white"></i> Plan de Trabajo
+                                                    </h3>
+                                                </div><!-- /.col -->
+                                            </div>
+                                            <p>&nbsp;</p>
+                                            <!-- info row -->
+                                            <div class="row invoice-info">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <p:messages closable="true" id="msgdet" showDetail="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-xs-3">
+                                                                <div class="form-group">
+                                                                    <label for="txtDetNombre" class="white">Nombre</label>
+                                                                    <h:inputText id="txtDetNombre" class="form-control form-white" readonly="true" value="#{planTrabajoBean.nombre}"/>
+                                                                    <!--VALUE OK-->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-xs-3">
+                                                                <div class="form-group">
+                                                                    <label for="txtDetCodigo" class="white">Codigo</label>
+                                                                    <h:inputText id="txtDetCodigo" class="form-white" readonly="true" value="#{planTrabajoBean.codigo}" maxlength="30">
+                                                                    </h:inputText><!--VALUE OK-->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-xs-3">
+                                                                <div class="form-group">
+                                                                    <h:outputText  class="control-label white" value="Tipo Plan de Trabajo"></h:outputText>
+                                                                    <h:selectOneMenu id="slcTipoPlan" class="form-control form-white"  value="#{planTrabajoBean.tipoEjercicio}">
+                                                                        <f:selectItems value="#{planTrabajoBean}" var="listTipoPlan" itemValue="#{listTipoPlan.code}" itemLabel="#{listTipoPlan.nombreP}"></f:selectItems>
+                                                                    </h:selectOneMenu>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label for="txareaDescripcion" class="white">Descripcion</label>
+                                                                    <h:inputTextarea id="txareaDescripcion" class="form-control form-white" readonly="true" value="#{planTrabajoBean.descripcion}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <h:dataTable id="tbRutinas" value="#{planTrabajoBean.listaRutinas}" var="list" class="table table-bordered">
+                                                            <h:column id="nombreRut">
+                                                                <f:facet name="header" class="white">Nombre</f:facet>
+                                                                <h:outputText class="white" value="#{list.rutNombre}"/>
+                                                            </h:column>
+                                                            <h:column id="codigoRut">
+                                                                <f:facet name="header" class="white">Codigo</f:facet>
+                                                                <h:outputText class="white" value="#{list.rutCodigo}"/>
+                                                            </h:column>
+                                                            <h:column id="repeticionesRut">
+                                                                <f:facet name="header" class="white">Repeticiones</f:facet>
+                                                                <h:outputText class="white" value="#{list.rutRepeticiones}"/>
+                                                            </h:column>
+                                                            <h:column id="caloriasRut">
+                                                                <f:facet name="header" class="white">Calorias Trabajadas</f:facet>
+                                                                <h:outputText class="white" value="#{list.rutCalorias}"/>
+                                                            </h:column>
+                                                            <h:column id="estado">
+                                                                <f:facet class="white" name="header">Video</f:facet>
+                                                                <h:outputText class="white" value="#{list.estado}"/>
+                                                            </h:column>
+                                                        </h:dataTable>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.row -->
+                                        </section>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                </h:form>
+                <!--</c:if>
                 <c:if  test="#{val eq false}">
                     <script>
                         document.location.href = 'index2.html';
                     </script>
-                </c:if>
+                </c:if>-->
             </ui:define>
 
         </ui:composition>
