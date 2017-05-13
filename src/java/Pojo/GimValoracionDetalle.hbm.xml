@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimValoracionDetalle" table="GIM_VALORACION_DETALLE" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA DONDE SE LE TOMAN TODAS LOS DATOS IMPORTANTES A UNA PERSONA QUE CORRESPONDE AL DETALLE DE LA VALORACION</comment>
+        <id name="detvalId" type="big_decimal">
+            <column name="DETVAL_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="detvalTrapecio" type="big_decimal">
+            <column name="DETVAL_TRAPECIO" precision="22" scale="0">
+                <comment>MEDIDA DEL TRAPECIO</comment>
+            </column>
+        </property>
+        <property name="detvalHombros" type="big_decimal">
+            <column name="DETVAL_HOMBROS" precision="22" scale="0">
+                <comment>MEDIDA DE LOS HOMBROS</comment>
+            </column>
+        </property>
+        <property name="detvalBicepderecho" type="big_decimal">
+            <column name="DETVAL_BICEPDERECHO" precision="22" scale="0">
+                <comment>MEDIDA DEL BICEP DERECHO</comment>
+            </column>
+        </property>
+        <property name="detvalBicepizquierdo" type="big_decimal">
+            <column name="DETVAL_BICEPIZQUIERDO" precision="22" scale="0">
+                <comment>MEDIDA DEL BICEP IZQUIERDO</comment>
+            </column>
+        </property>
+        <property name="detvalEspalda" type="big_decimal">
+            <column name="DETVAL_ESPALDA" precision="22" scale="0">
+                <comment>MEDIDA DE LA ESPALDA</comment>
+            </column>
+        </property>
+        <property name="detvalDorsales" type="big_decimal">
+            <column name="DETVAL_DORSALES" precision="22" scale="0">
+                <comment>MEDIDA DE LAS DORSALES</comment>
+            </column>
+        </property>
+        <property name="detvalTricepderechoSup" type="big_decimal">
+            <column name="DETVAL_TRICEPDERECHO_SUP" precision="22" scale="0">
+                <comment>MEDIDA DEL TRICEP DERECHO SUPERIOR</comment>
+            </column>
+        </property>
+        <property name="detvalTricepderechoInf" type="big_decimal">
+            <column name="DETVAL_TRICEPDERECHO_INF" precision="22" scale="0">
+                <comment>MEDIDA TRICEP DERECHO INFERIOR</comment>
+            </column>
+        </property>
+        <property name="detvalTricepizquierdoSup" type="big_decimal">
+            <column name="DETVAL_TRICEPIZQUIERDO_SUP" precision="22" scale="0">
+                <comment>MEDIDA DEL TRICEP IZQUIERDO SUPERIOR</comment>
+            </column>
+        </property>
+        <property name="detvalTricepizquieroInf" type="big_decimal">
+            <column name="DETVAL_TRICEPIZQUIERO_INF" precision="22" scale="0">
+                <comment>MEDIDA DEL TRICEP IZQUIERDO INFERIOR</comment>
+            </column>
+        </property>
+        <property name="detvalPectorales" type="big_decimal">
+            <column name="DETVAL_PECTORALES" precision="22" scale="0">
+                <comment>MEDIDAS DE LOS PECTORALES</comment>
+            </column>
+        </property>
+        <property name="detvalAbdomen" type="big_decimal">
+            <column name="DETVAL_ABDOMEN" precision="22" scale="0">
+                <comment>MEDIDA DEL ABDOMEN</comment>
+            </column>
+        </property>
+        <property name="detvalCaderas" type="big_decimal">
+            <column name="DETVAL_CADERAS" precision="22" scale="0">
+                <comment>MEDIDA DE LAS CADERAS</comment>
+            </column>
+        </property>
+        <property name="detvalCintura" type="big_decimal">
+            <column name="DETVAL_CINTURA" precision="22" scale="0">
+                <comment>MEDIDA DE LA CINTURA</comment>
+            </column>
+        </property>
+        <property name="detvalGluteos" type="big_decimal">
+            <column name="DETVAL_GLUTEOS" precision="22" scale="0">
+                <comment>MEDIDA DE LOS GLUTEOS</comment>
+            </column>
+        </property>
+        <property name="detvalCuadricep" type="big_decimal">
+            <column name="DETVAL_CUADRICEP" precision="22" scale="0">
+                <comment>MEDIDA DEL CUADRICEPS (PARTE DELANTERA DE LA PIERNA)</comment>
+            </column>
+        </property>
+        <property name="detvalFemorales" type="big_decimal">
+            <column name="DETVAL_FEMORALES" precision="22" scale="0">
+                <comment>MEDIDA DE FEMORALES (PARTE TRASERA DE LA PIERNA)</comment>
+            </column>
+        </property>
+        <property name="detvalAductores" type="big_decimal">
+            <column name="DETVAL_ADUCTORES" precision="22" scale="0">
+                <comment>MEDIDA DE LOS ADUCTORES</comment>
+            </column>
+        </property>
+        <property name="detvalPantorrillas" type="big_decimal">
+            <column name="DETVAL_PANTORRILLAS" precision="22" scale="0">
+                <comment>MEDIDA DE LAS PANTORRILLAS</comment>
+            </column>
+        </property>
+        <property name="detvalEstado" type="big_decimal">
+            <column name="DETVAL_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DE LA VALORACION</comment>
+            </column>
+        </property>
+        <property name="valId" type="big_decimal">
+            <column name="VAL_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL MAESTRO DE LA VALORACION</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

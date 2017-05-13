@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimValoracionMaestro" table="GIM_VALORACION_MAESTRO" schema="ALBERTO" optimistic-lock="version">
+        <comment>DETALLE DE LAS VALORACIONES DE LAS PERSONAS</comment>
+        <id name="valId" type="big_decimal">
+            <column name="VAL_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="cliId" type="big_decimal">
+            <column name="CLI_ID" precision="22" scale="0" not-null="true">
+                <comment>CLIENTE AL QUE SE LE HIZO LA VALORACI&#211;N</comment>
+            </column>
+        </property>
+        <property name="instId" type="big_decimal">
+            <column name="INST_ID" precision="22" scale="0" not-null="true">
+                <comment>INSTRUCTOR QUE HIZO LA VALORACI&#211;N</comment>
+            </column>
+        </property>
+        <property name="valFechaproceso" type="date">
+            <column name="VAL_FECHAPROCESO" length="7">
+                <comment>FECHA EN LA QUE SE REALIZ&#211; LA VALORACI&#211;N DE LA PERSONA</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

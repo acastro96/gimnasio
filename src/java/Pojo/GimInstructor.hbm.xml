@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimInstructor" table="GIM_INSTRUCTOR" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA EN LA QUE SE ALMACENAN LOS INSTRUCTORES</comment>
+        <id name="instId" type="big_decimal">
+            <column name="INST_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="gimPersona" class="Pojo.GimPersona" fetch="select">
+            <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DE LA PERSONA DEL INSTRUCTOR</comment>
+            </column>
+        </many-to-one>
+        <property name="instFechaingreso" type="date">
+            <column name="INST_FECHAINGRESO" length="7">
+                <comment>FECHA EN LA QUE INGRESO EL INSTRUCTOR</comment>
+            </column>
+        </property>
+        <property name="instFechadesvinculacion" type="date">
+            <column name="INST_FECHADESVINCULACION" length="7">
+                <comment>FECHA EN LA QUE EL INSTRUCTOR SE DESVINCUL&#211; DE LA PLATAFORMA</comment>
+            </column>
+        </property>
+        <property name="instEspecialidad" type="big_decimal">
+            <column name="INST_ESPECIALIDAD" precision="22" scale="0">
+                <comment>LA ESPECIALIDAD EN LA QUE MEJOR SE DESEMPE&#209;A EL INSTRUCTOR (PARAMETRO)</comment>
+            </column>
+        </property>
+        <property name="instNivelestudio" type="big_decimal">
+            <column name="INST_NIVELESTUDIO" precision="22" scale="0" not-null="true">
+                <comment>EL NIVEL DE ESTUDIO QUE TIENE EL INSTRUCTOR(PARAMETRO)</comment>
+            </column>
+        </property>
+        <property name="instFechaproceso" type="date">
+            <column name="INST_FECHAPROCESO" length="7">
+                <comment>FECHA DE CREACION DEL REGISTRO</comment>
+            </column>
+        </property>
+        <property name="instEstado" type="big_decimal">
+            <column name="INST_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL INSTRUCTOR</comment>
+            </column>
+        </property>
+        <property name="instNivelnutricion" type="big_decimal">
+            <column name="INST_NIVELNUTRICION" precision="22" scale="0" not-null="true">
+                <comment>EL NIVEL DE ESTUDIO QUE TIENE SOBRE LA NUTRICION ADECUADA PARA EL CUERPO(PARAMETRO)</comment>
+            </column>
+        </property>
+        <property name="instCodigo" type="string">
+            <column name="INST_CODIGO" length="30" not-null="true" unique="true">
+                <comment>CODIGO UNICO DEL INSTRUCTOR</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

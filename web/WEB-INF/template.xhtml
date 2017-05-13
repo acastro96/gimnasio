@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <style>
+	body{
+		font: 62.5% "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}
+	.demoHeaders {
+		margin-top: 2em;
+	}
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+	select {
+		width: 200px;
+	}
+	</style>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Gimnasio Virtual</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content="Cardio is a free one page template made exclusively for Codrops by Luka Cvetinovic" />
+        <meta name="keywords" content="html template, css, free, one page, gym, fitness, web design" />
+        <meta name="author" content="Luka Cvetinovic for Codrops" />
+        <link rel="apple-touch-icon" sizes="57x57" href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-57x57.png"/>
+        <link rel="apple-touch-icon" sizes="60x60" href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-60x60.png"/>
+        <link rel="icon" type="image/png" href="#{request.contextPath}/resources/img/favicons/favicon-32x32.png" sizes="32x32"/>
+        <link rel="icon" type="image/png" href="#{request.contextPath}/resources/img/favicons/favicon-16x16.png" sizes="16x16"/>
+        <link rel="manifest" href="#{request.contextPath}/resources/img/favicons/manifest.json"/>
+        <link rel="shortcut icon" href="#{request.contextPath}/resources/img/favicons/favicon.ico"/>
+        <meta name="msapplication-TileColor" content="#00a8ff"/>
+        <meta name="msapplication-config" content="#{request.contextPath}/resources/img/favicons/browserconfig.xml"/>
+        <meta name="theme-color" content="#ffffff"/>
+        <!-- Normalize -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/normalize.css"/>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/bootstrap.css"/>
+        <!-- Owl -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/owl.css"/>
+        <!-- Animate.css -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/animate.css"/>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/fonts/font-awesome-4.1.0/css/font-awesome.min.css"/>
+        <!-- Elegant Icons -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/fonts/eleganticons/et-icons.css"/>
+        <!-- Main style -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/cardio.css"/>
+        <link href="#{request.contextPath}/resources/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <!-- Scripts -->
+        
+        <script src="#{request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+        <script src="#{request.contextPath}/resources/js/owl.carousel.min.js"></script>
+        <script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="#{request.contextPath}/resources/js/wow.min.js"></script>
+        <script src="#{request.contextPath}/resources/js/typewriter.js"></script>
+        <script src="#{request.contextPath}/resources/js/jquery.onepagenav.js"></script>
+        <script src="#{request.contextPath}/resources/js/main.js"></script>
+        <script src="#{request.contextPath}/resources/js/jquery.js" type="text/javascript"></script>
+        <script src="#{request.contextPath}/resources/js/jquery-ui.js" type="text/javascript"></script>
+        <!--No funciona el acordeon-->
+        <script>
+            $( "#accordion" ).accordion();
+            $( "#dialog-link, #icons li" ).hover(
+                    function() {
+                            $( this ).addClass( "ui-state-hover" );
+                    },
+                    function() {
+                            $( this ).removeClass( "ui-state-hover" );
+                    }
+            );
+        </script>
+    </h:head>
+    
+    <h:body>
+            <ui:insert name="top">
+                <!-- Parte Superior del Template que se va a utilizar en todo el proyecto -->
+                <div class="preloader">
+                    <img src="#{request.contextPath}/resources/img/loader.gif" alt="Preloader image"></img>
+                </div>
+                <nav class="navbar">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#"><img src="#{request.contextPath}/resources/img/logo.png" data-active-url="#{request.contextPath}/resources/img/logo-active.png" alt=""></img></a>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right main-nav">
+                                <li><a href="#intro">Inicio</a></li>
+                                <li><a href="#services">Servicios</a></li>
+                                <!--<li><a href="#team">Equipo</a></li>-->
+                                <li><a href="#pricing">Membresías</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#modalSesion" class="btn btn-blue">Iniciar Sesión</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </ui:insert>
+
+
+        <ui:insert name="content">Content</ui:insert>
+
+
+    </h:body>
+
+</html>

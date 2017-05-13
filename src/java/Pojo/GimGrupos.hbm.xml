@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimGrupos" table="GIM_GRUPOS" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA DE GRUPOS DE PARAMETROS</comment>
+        <id name="gruId" type="big_decimal">
+            <column name="GRU_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="gruDescripcion" type="string">
+            <column name="GRU_DESCRIPCION" length="50" not-null="true">
+                <comment>DESCRIPCION DEL GRUPO DE PARAMETROS QUE SE VAN A UTILIZAR</comment>
+            </column>
+        </property>
+        <set name="gimParametroses" table="GIM_PARAMETROS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="GRU_ID" precision="22" scale="0" not-null="true">
+                    <comment>ID DEL GRUPO AL QUE CORRESPONDE EL PARAMETRO</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimParametros" />
+        </set>
+    </class>
+</hibernate-mapping>

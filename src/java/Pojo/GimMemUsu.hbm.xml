@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimMemUsu" table="GIM_MEM_USU" schema="ALBERTO" optimistic-lock="version">
+        <composite-id name="id" class="Pojo.GimMemUsuId">
+            <key-property name="memId" type="big_decimal">
+                <column name="MEM_ID" precision="22" scale="0" />
+            </key-property>
+            <key-property name="usuId" type="big_decimal">
+                <column name="USU_ID" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+        <property name="memUsuFechaproceso" type="date">
+            <column name="MEM_USU_FECHAPROCESO" length="7">
+                <comment>FECHA EN LA QUE SE ASIGNO LA MEMBRESIA</comment>
+            </column>
+        </property>
+        <property name="memUsuFechainicial" type="date">
+            <column name="MEM_USU_FECHAINICIAL" length="7">
+                <comment>FECHA EN LA QUE INICIA LA MEMBRESIA DEL USUARIO</comment>
+            </column>
+        </property>
+        <property name="memUsuFechafinal" type="date">
+            <column name="MEM_USU_FECHAFINAL" length="7" not-null="true">
+                <comment>FECHA EN LA QUE FINALIZA LA MEMBRESIA DEL USUARIO</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

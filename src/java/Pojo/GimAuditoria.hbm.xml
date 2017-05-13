@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimAuditoria" table="GIM_AUDITORIA" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA DE AUDITORIAS DEL SISTEMA</comment>
+        <id name="audId" type="big_decimal">
+            <column name="AUD_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="audFechaproceso" type="serializable">
+            <column name="AUD_FECHAPROCESO">
+                <comment>FECHA EN LA QUE SE REALIZO LA ACCI&#211;N EN EL SISTEMA</comment>
+            </column>
+        </property>
+        <property name="audProceso" type="string">
+            <column name="AUD_PROCESO" length="40" not-null="true">
+                <comment>EL PROCESO QUE SE REALIZ&#211; (INSERT - UPDATE - DELETE )</comment>
+            </column>
+        </property>
+        <property name="usuId" type="big_decimal">
+            <column name="USU_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL USUARIO QUE REALIZ&#211; EL PROCESO</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

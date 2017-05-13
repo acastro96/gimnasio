@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:Oracle:thin:@localhost:1521:xe</property>
+    <property name="hibernate.connection.username">ALBERTO</property>
+    <property name="hibernate.connection.password">123456</property>
+    <property name="hibernate.id.new_generator_mappings">true</property>
+    <mapping resource="Pojo/GimValoracionMaestro.hbm.xml"/>
+    <mapping resource="Pojo/GimModulo.hbm.xml"/>
+    <mapping resource="Pojo/GimGrupos.hbm.xml"/>
+    <mapping resource="Pojo/GimParametros.hbm.xml"/>
+    <mapping resource="Pojo/GimDireccion.hbm.xml"/>
+    <mapping resource="Pojo/GimPlanRut.hbm.xml"/>
+    <mapping resource="Pojo/GimPerfilrecurso.hbm.xml"/>
+    <mapping resource="Pojo/GimValoracionDetalle.hbm.xml"/>
+    <mapping resource="Pojo/GimInstructor.hbm.xml"/>
+    <mapping resource="Pojo/GimPersona.hbm.xml"/>
+    <mapping resource="Pojo/GimVideo.hbm.xml"/>
+    <mapping resource="Pojo/GimRecurso.hbm.xml"/>
+    <mapping resource="Pojo/GimTelefono.hbm.xml"/>
+    <mapping resource="Pojo/GimPlanTrabajo.hbm.xml"/>
+    <mapping resource="Pojo/GimAuditoria.hbm.xml"/>
+    <mapping resource="Pojo/GimRutObj.hbm.xml"/>
+    <mapping resource="Pojo/GimMemUsu.hbm.xml"/>
+    <mapping resource="Pojo/GimObjetos.hbm.xml"/>
+    <mapping resource="Pojo/GimMembresia.hbm.xml"/>
+    <mapping resource="Pojo/GimRutina.hbm.xml"/>
+    <mapping resource="Pojo/GimUsuario.hbm.xml"/>
+    <mapping resource="Pojo/GimCliente.hbm.xml"/>
+    <mapping resource="Pojo/GimPerfil.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

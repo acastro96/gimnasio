@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimModulo" table="GIM_MODULO" schema="ALBERTO" optimistic-lock="version">
+        <comment>MODULOS DE LA PLATAFORMA</comment>
+        <id name="modId" type="big_decimal">
+            <column name="MOD_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="modNombre" type="string">
+            <column name="MOD_NOMBRE" length="50" not-null="true">
+                <comment>NOMBRE DEL MODULO</comment>
+            </column>
+        </property>
+        <property name="modFechainicial" type="date">
+            <column name="MOD_FECHAINICIAL" length="7" not-null="true">
+                <comment>FECHA EN LA QUE SE PUEDE VER EL MODULO</comment>
+            </column>
+        </property>
+        <property name="modFechafinal" type="date">
+            <column name="MOD_FECHAFINAL" length="7">
+                <comment>FECHA EN LA QUE SE DESHABILITA EL MODULO</comment>
+            </column>
+        </property>
+        <property name="modFechaproceso" type="date">
+            <column name="MOD_FECHAPROCESO" length="7" not-null="true">
+                <comment>FECHA DE CREACION DEL REGISTRO EN LA TABLA</comment>
+            </column>
+        </property>
+        <property name="modEstado" type="big_decimal">
+            <column name="MOD_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL MODULO(ACTIVO - INACTIVO)</comment>
+            </column>
+        </property>
+        <property name="icono" type="string">
+            <column name="ICONO" length="30">
+                <comment>ICONO QUE VA ASOCIADO AL MODULO</comment>
+            </column>
+        </property>
+        <set name="gimRecursos" table="GIM_RECURSO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="MOD_ID" precision="22" scale="0" not-null="true">
+                    <comment>MODULO AL CUAL PERTENECE EL RECURSO</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimRecurso" />
+        </set>
+    </class>
+</hibernate-mapping>

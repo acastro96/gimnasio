@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection/>
+  <table-filter match-name="GIM_PERFIL"/>
+  <table-filter match-name="GIM_PERSONA"/>
+  <table-filter match-name="GIM_VIDEO"/>
+  <table-filter match-name="GIM_MEM_USU"/>
+  <table-filter match-name="GIM_PERFILRECURSO"/>
+  <table-filter match-name="GIM_TELEFONO"/>
+  <table-filter match-name="GIM_VALORACION_MAESTRO"/>
+  <table-filter match-name="GIM_PARAMETROS"/>
+  <table-filter match-name="GIM_RECURSO"/>
+  <table-filter match-name="GIM_USUARIO"/>
+  <table-filter match-name="GIM_GRUPOS"/>
+  <table-filter match-name="GIM_MODULO"/>
+  <table-filter match-name="GIM_RUT_OBJ"/>
+  <table-filter match-name="GIM_VALORACION_DETALLE"/>
+  <table-filter match-name="GIM_CLIENTE"/>
+  <table-filter match-name="GIM_DIRECCION"/>
+  <table-filter match-name="GIM_MEMBRESIA"/>
+  <table-filter match-name="GIM_PLAN_TRABAJO"/>
+  <table-filter match-name="GIM_OBJETOS"/>
+  <table-filter match-name="GIM_RUTINA"/>
+  <table-filter match-name="GIM_AUDITORIA"/>
+  <table-filter match-name="GIM_PLAN_RUT"/>
+  <table-filter match-name="GIM_INSTRUCTOR"/>
+</hibernate-reverse-engineering>

@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/templateInicio.xhtml">
+
+            <ui:define name="content">
+                <div style="margin-top: 120px"></div>
+                <!--<c:forEach items="${loginBean.listRecursos}" var="rec">
+                    <c:if  test="#{rec eq 'clienteRegistrar'}" var="bool">
+                        <c:set var="val" value="true"/>
+                    </c:if>
+                </c:forEach>
+                <c:if  test="#{val eq true}">-->
+                    <h:form id="frmRegistrarRutina" enctype="multipart/form-data">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p:messages id="mensaje" showDetail="true"  autoUpdate="true" closable="true" />
+                                </div>
+                            </div>
+                            <h3>Rutina</h3>
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <label for="nombreRut">Nombre Rutina</label>
+                                    <h:inputText class="form-control" value="#{rutinasBean.nombre}" id="nombreRut" maxlength="50"/>
+                                    <small id="nombreRut" class="form-text text-muted">Obligatorio</small>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="codigoRut">Codigo Rutina</label>
+                                    <h:inputText class="form-control" value="#{rutinasBean.codigo}" id="codigoRut" maxlength="50"/>
+                                    <small id="codigoRut" class="form-text text-muted">Obligatorio</small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <label for="repeticionesRut">Repeticiones en la Rutina</label>
+                                    <h:selectOneMenu class="form-control" id="repeticionesRut" value="#{rutinasBean.repeticiones}">
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                    </h:selectOneMenu>
+                                    <small id="repeticionesRut" class="form-text text-muted"></small>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="caloriasRut">Calorias Rutina</label>
+                                    <h:selectOneMenu class="form-control" id="caloriasRut" value="#{rutinasBean.calorias}">
+                                        <f:selectItem itemLabel="50" itemValue="50" />
+                                        <f:selectItem itemLabel="100" itemValue="100" />
+                                        <f:selectItem itemLabel="150" itemValue="150" />
+                                        <f:selectItem itemLabel="200" itemValue="200" />
+                                        <f:selectItem itemLabel="300" itemValue="300" />
+                                    </h:selectOneMenu>
+                                    <small id="caloriasRut" class="form-text text-muted">Aprox.</small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-12">
+                                    <label for="descripcionRut">Descripcion Rutina</label>
+                                    <h:inputTextarea rows="5" class="form-control" value="#{rutinasBean.descripcion}" id="descripcionRut"/>
+                                    <small id="descripcionRut" class="form-text text-muted">Obligatorio</small>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px"></div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="videoRut">Agregar Video</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    <p:fileUpload id="videoRut" mode="simple" value="#{rutinasBean.video}"/>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <!--Cuando le de click a este boton va a llevarlo al metodo de insertar instructor que esta en el Bean Instructor-->
+                                <h:commandButton id="btnRegistrarRutina" action="#{rutinasBean.upload()}" class="btn btn-primary">
+                                    <i class="fa fa-save"/> Guardar
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                <!--</c:if>
+                <c:if  test="#{val eq false}">
+                    <script>
+                        document.location.href = 'index2.html';
+                    </script>
+                </c:if>-->
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimPlanTrabajo" table="GIM_PLAN_TRABAJO" schema="ALBERTO" optimistic-lock="version">
+        <id name="planId" type="big_decimal">
+            <column name="PLAN_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="gimUsuario" class="Pojo.GimUsuario" fetch="select">
+            <column name="USU_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL USUARIO QUE CRE&#211; EL PLAN DE TRABAJO</comment>
+            </column>
+        </many-to-one>
+        <property name="planDescripcion" type="string">
+            <column name="PLAN_DESCRIPCION" length="300" not-null="true">
+                <comment>DESCRIPCION GENERAL DEL PLAN DE TRABAJO</comment>
+            </column>
+        </property>
+        <property name="planNombre" type="string">
+            <column name="PLAN_NOMBRE" length="100" not-null="true">
+                <comment>NOMBRE DEL PLAN DE TRABAJO</comment>
+            </column>
+        </property>
+        <property name="planTipoEjercicio" type="big_decimal">
+            <column name="PLAN_TIPO_EJERCICIO" precision="22" scale="0" not-null="true">
+                <comment>ES EL TIPO DE EJERCICIO AL CUAL PERTENECE EL PLAN DE TRABAJO, PUEDE SER ADELGAZAR, MUSCULATURA, TONIFICACION, ETC. (PARAMETRO)</comment>
+            </column>
+        </property>
+        <property name="planFechaproceso" type="date">
+            <column name="PLAN_FECHAPROCESO" length="7">
+                <comment>FECHA DE LA INSERCION DEL REGISTRO</comment>
+            </column>
+        </property>
+        <property name="planEstado" type="big_decimal">
+            <column name="PLAN_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL PLAN DE TRABAJO (PARAMETRO: ACTIVO - INACTIVO)</comment>
+            </column>
+        </property>
+        <property name="planCodigo" type="string">
+            <column name="PLAN_CODIGO" length="20" not-null="true">
+                <comment>CODIGO DEL PLAN DE TRABAJO</comment>
+            </column>
+        </property>
+        <set name="gimPlanRuts" table="GIM_PLAN_RUT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PLAN_ID" precision="22" scale="0" not-null="true">
+                    <comment>ID DEL PLAN DE TRABAJO</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimPlanRut" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimPersona" table="GIM_PERSONA" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA PERSONAS DE LA BASE DE DATOS EN DONDE SE ALMACENAN TODAS LAS PERSONAS QUE SE REGISTRAN</comment>
+        <id name="persId" type="big_decimal">
+            <column name="PERS_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="persNombre1" type="string">
+            <column name="PERS_NOMBRE1" length="50" not-null="true">
+                <comment>PRIMER NOMBRE DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persNombre2" type="string">
+            <column name="PERS_NOMBRE2" length="50">
+                <comment>SEGUNDO NOMBRE DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persApellido1" type="string">
+            <column name="PERS_APELLIDO1" length="50" not-null="true">
+                <comment>PRIMER APELLIDO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persApellido2" type="string">
+            <column name="PERS_APELLIDO2" length="50" not-null="true">
+                <comment>SEGUNDO APELLIDO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persTipodocumento" type="big_decimal">
+            <column name="PERS_TIPODOCUMENTO" precision="22" scale="0" not-null="true">
+                <comment>TIPO DE DOCUMENTO QUE VA ENLAZADO CON LA TABLA DE PARAMETROS</comment>
+            </column>
+        </property>
+        <property name="persFechanacimiento" type="date">
+            <column name="PERS_FECHANACIMIENTO" length="7">
+                <comment>FECHA DE NACIMIENTO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persLugarnacimiento" type="big_decimal">
+            <column name="PERS_LUGARNACIMIENTO" precision="22" scale="0">
+                <comment>LUGAR DE NACIMIENTO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persGruposanguineo" type="big_decimal">
+            <column name="PERS_GRUPOSANGUINEO" precision="22" scale="0" not-null="true">
+                <comment>GRUPO SANGUINEO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persRh" type="string">
+            <column name="PERS_RH" length="10" not-null="true">
+                <comment>RH DE LA PERSONA (POSITIVO - NEGATIVO)</comment>
+            </column>
+        </property>
+        <property name="persSexo" type="big_decimal">
+            <column name="PERS_SEXO" precision="22" scale="0" not-null="true">
+                <comment>SEXO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persFechafinal" type="date">
+            <column name="PERS_FECHAFINAL" length="7">
+                <comment>FECHA EN LA QUE LA PERSONA DESAPARECE DE LA PLATAFORMA</comment>
+            </column>
+        </property>
+        <property name="persFechainicial" type="date">
+            <column name="PERS_FECHAINICIAL" length="7">
+                <comment>FECHA EN LA QUE LA PERSONA INGRESA EN LA PLATAFORMA</comment>
+            </column>
+        </property>
+        <property name="persEstado" type="big_decimal">
+            <column name="PERS_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DE LA PERSONA(ACTIVO - INACTIVO)</comment>
+            </column>
+        </property>
+        <property name="persNumerodocumento" type="string">
+            <column name="PERS_NUMERODOCUMENTO" length="30" not-null="true" unique="true">
+                <comment>NUMERO DE DOCUMENTO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="persEmail" type="string">
+            <column name="PERS_EMAIL" length="60" not-null="true">
+                <comment>EMAIL DE LA PERSONA</comment>
+            </column>
+        </property>
+        <set name="gimUsuarios" table="GIM_USUARIO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                    <comment>FORANEA DE LA PERSONA A LA CUAL PERTENECE EL USUARIO</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimUsuario" />
+        </set>
+        <set name="gimClientes" table="GIM_CLIENTE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                    <comment>PERSONA REGISTRADA DEL CLIENTE</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimCliente" />
+        </set>
+        <set name="gimInstructors" table="GIM_INSTRUCTOR" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                    <comment>ID DE LA PERSONA DEL INSTRUCTOR</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimInstructor" />
+        </set>
+        <set name="gimTelefonos" table="GIM_TELEFONO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                    <comment>PERSONA A LA QUE PERTENECE EL TELEFONO</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimTelefono" />
+        </set>
+        <set name="gimDireccions" table="GIM_DIRECCION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                    <comment>ID DE LA PERSONA A LA CUAL PERTENECE LA DIRECCION</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimDireccion" />
+        </set>
+    </class>
+</hibernate-mapping>

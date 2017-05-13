@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimObjetos" table="GIM_OBJETOS" schema="ALBERTO" optimistic-lock="version">
+        <comment>OBJETOS QUE SE PUEDEN UTILIZAR PARA DESEMPE&#209;AR LAS RUTINAS</comment>
+        <id name="objId" type="big_decimal">
+            <column name="OBJ_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="objCodigo" type="string">
+            <column name="OBJ_CODIGO" length="20" not-null="true">
+                <comment>CODIGO DEL OBJETO</comment>
+            </column>
+        </property>
+        <property name="objNombre" type="string">
+            <column name="OBJ_NOMBRE" length="50" not-null="true">
+                <comment>NOMBRE DEL OBJETO</comment>
+            </column>
+        </property>
+        <property name="objFechaproceso" type="date">
+            <column name="OBJ_FECHAPROCESO" length="7">
+                <comment>FECHA DE INSERCION DEL REGISTRO A LA TABLA</comment>
+            </column>
+        </property>
+        <set name="gimRutObjs" table="GIM_RUT_OBJ" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="OBJ_ID" precision="22" scale="0" not-null="true">
+                    <comment>ID DEL OBJETO DE LA RUTINA</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimRutObj" />
+        </set>
+    </class>
+</hibernate-mapping>

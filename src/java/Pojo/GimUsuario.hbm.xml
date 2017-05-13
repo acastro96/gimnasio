@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimUsuario" table="GIM_USUARIO" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA USUARIOS EN LA QUE SE GUARDAN TODOS LOS USUARIOS QUE SON CREADOS EN LA PLATAFORMA</comment>
+        <id name="usuId" type="big_decimal">
+            <column name="USU_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="gimPerfil" class="Pojo.GimPerfil" fetch="select">
+            <column name="PERF_ID" precision="22" scale="0" not-null="true">
+                <comment>PERFIL QUE SE LE ASIGNA AL USUARIO</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="gimPersona" class="Pojo.GimPersona" fetch="select">
+            <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                <comment>FORANEA DE LA PERSONA A LA CUAL PERTENECE EL USUARIO</comment>
+            </column>
+        </many-to-one>
+        <property name="usuNombre" type="string">
+            <column name="USU_NOMBRE" length="30" not-null="true">
+                <comment>NOMBRE DEL USUARIO</comment>
+            </column>
+        </property>
+        <property name="usuPassword" type="string">
+            <column name="USU_PASSWORD" length="30" not-null="true">
+                <comment>CONTRASE&#209;A DEL USUARIO</comment>
+            </column>
+        </property>
+        <property name="usuFechainicial" type="date">
+            <column name="USU_FECHAINICIAL" length="7">
+                <comment>FECHA DE INICIO DEL USUARIO EN EL SISTEMA</comment>
+            </column>
+        </property>
+        <property name="usuFechafinal" type="date">
+            <column name="USU_FECHAFINAL" length="7">
+                <comment>FECHA FINAL EN EL QUE EL USUARIO DEJA DE ESTAR HABILITADO</comment>
+            </column>
+        </property>
+        <property name="usuFechaproceso" type="date">
+            <column name="USU_FECHAPROCESO" length="7">
+                <comment>FECHA DE REGISTRO DEL USUARIO</comment>
+            </column>
+        </property>
+        <property name="usuEstado" type="big_decimal">
+            <column name="USU_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL USUARIO(ACTIVO - INACTIVO)</comment>
+            </column>
+        </property>
+        <set name="gimPlanTrabajos" table="GIM_PLAN_TRABAJO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USU_ID" precision="22" scale="0" not-null="true">
+                    <comment>ID DEL USUARIO QUE CRE&#211; EL PLAN DE TRABAJO</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimPlanTrabajo" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimTelefono" table="GIM_TELEFONO" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA EN DONDE SE VAN A ALMACENAR LOS TELEFONOS QUE SE REGISTREN PARA CADA PERSONA</comment>
+        <id name="telId" type="big_decimal">
+            <column name="TEL_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="gimPersona" class="Pojo.GimPersona" fetch="select">
+            <column name="PERS_ID" precision="22" scale="0" not-null="true">
+                <comment>PERSONA A LA QUE PERTENECE EL TELEFONO</comment>
+            </column>
+        </many-to-one>
+        <property name="telTelefono" type="string">
+            <column name="TEL_TELEFONO" length="30">
+                <comment>TELEFONO DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="telCelular" type="string">
+            <column name="TEL_CELULAR" length="30">
+                <comment>CELULAR DE LA PERSONA</comment>
+            </column>
+        </property>
+        <property name="telFechaproceso" type="date">
+            <column name="TEL_FECHAPROCESO" length="7">
+                <comment>FECHA EN LA QUE SE INSERTO EL REGISTRO</comment>
+            </column>
+        </property>
+        <property name="telEstado" type="big_decimal">
+            <column name="TEL_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL REGISTRO DE TELEFONOS ES UN PARAMETRO (ACTIVO - INACTIVO)</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

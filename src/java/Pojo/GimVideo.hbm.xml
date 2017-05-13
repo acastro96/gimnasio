@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimVideo" table="GIM_VIDEO" schema="ALBERTO" optimistic-lock="version">
+        <comment>VIDEOS QUE SE ALMACENAN PARA CADA RUTINA</comment>
+        <id name="vidId" type="big_decimal">
+            <column name="VID_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="gimRutina" class="Pojo.GimRutina" fetch="select">
+            <column name="RUT_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DE LA RUTINA A LA CUAL EST&#193; ASIGNADA EL VIDEO</comment>
+            </column>
+        </many-to-one>
+        <property name="vidDescripcion" type="string">
+            <column name="VID_DESCRIPCION" length="300" not-null="true">
+                <comment>DESCRIPCION DETALLADA DEL VIDEO QUE SE EST&#193; REALIZANDO</comment>
+            </column>
+        </property>
+        <property name="vidDirArchivo" type="string">
+            <column name="VID_DIR_ARCHIVO" length="200" not-null="true">
+                <comment>LA DIRECCION EN LA QUE EST&#193; UBICADA EL ARCHIVO DE VIDEO</comment>
+            </column>
+        </property>
+        <property name="vidFechaproceso" type="date">
+            <column name="VID_FECHAPROCESO" length="7">
+                <comment>FECHA DE INSERCION DEL REGISTRO</comment>
+            </column>
+        </property>
+        <property name="vidEstado" type="big_decimal">
+            <column name="VID_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL VIDEO (PARAMETRO: ACTIVO - INACTIVO)</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

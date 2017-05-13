@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimPerfil" table="GIM_PERFIL" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA EN DONDE SE REGISTRAN TODOS LOS PERFILES QUE TIENE LA PLATAFORMA</comment>
+        <id name="perfId" type="big_decimal">
+            <column name="PERF_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="perfNombre" type="string">
+            <column name="PERF_NOMBRE" length="30" not-null="true">
+                <comment>NOMBRE DEL PERFIL</comment>
+            </column>
+        </property>
+        <set name="gimUsuarios" table="GIM_USUARIO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERF_ID" precision="22" scale="0" not-null="true">
+                    <comment>PERFIL QUE SE LE ASIGNA AL USUARIO</comment>
+                </column>
+            </key>
+            <one-to-many class="Pojo.GimUsuario" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimParametros" table="GIM_PARAMETROS" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA DE PARAMETROS</comment>
+        <id name="parId" type="big_decimal">
+            <column name="PAR_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="gimGrupos" class="Pojo.GimGrupos" fetch="select">
+            <column name="GRU_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL GRUPO AL QUE CORRESPONDE EL PARAMETRO</comment>
+            </column>
+        </many-to-one>
+        <property name="parCodigo" type="big_decimal">
+            <column name="PAR_CODIGO" precision="22" scale="0" not-null="true">
+                <comment>CODIGO DEL PARAMETRO</comment>
+            </column>
+        </property>
+        <property name="parNombrecorto" type="string">
+            <column name="PAR_NOMBRECORTO" length="20">
+                <comment>NOMBREC CORTO DEL PARAMETRO</comment>
+            </column>
+        </property>
+        <property name="parNombre" type="string">
+            <column name="PAR_NOMBRE" length="50" not-null="true">
+                <comment>NOMBRE QUE SE VA A REFLEJAR DEL PARAMETRO</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

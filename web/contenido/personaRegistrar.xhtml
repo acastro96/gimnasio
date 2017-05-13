@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <div style="margin-top: 120px"></div>
+                <c:forEach items="${loginBean.listRecursos}" var="rec">
+                    <c:if  test="#{rec eq 'personaRegistrar'}" var="bool">
+                        <c:set var="val" value="true"/>
+                    </c:if>
+                </c:forEach>
+                <c:if  test="#{val eq true}">
+                    <h:form>
+                        <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true"  />
+                        <div class="container">
+                            <div id="accordion">
+                                <h3>Informacion Basica</h3>
+                                <div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="nombre1">Primer Nombre</label>
+                                            <h:inputText class="form-control" value="#{personasBean.nombre1}" id="nombre1"/>
+                                            <small id="nombre1" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="nombre2">Segundo Nombre</label>
+                                            <h:inputText class="form-control" value="#{personasBean.nombre2}" id="nombre2"/>
+                                            <small id="nombre2" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="apellido1">Primer Apellido</label>
+                                            <h:inputText class="form-control" value="#{personasBean.apellido1}" id="apellido1"/>
+                                            <small id="apellido1" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="apellido2">Segundo Apellido</label>
+                                            <h:inputText class="form-control" value="#{personasBean.apellido2}" id="apellido2"/>
+                                            <small id="apellido2" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="tipodoc">Tipo de Documento</label>
+                                            <h:selectOneMenu class="form-control" id="tipodoc" value="#{personasBean.tipoDocumento}">
+                                                <f:selectItem itemLabel="CC" itemValue="1"/>
+                                                <f:selectItem itemLabel="TI" itemValue="2"/>
+                                                <f:selectItem itemLabel="CE" itemValue="3"/>
+                                                <f:selectItem itemLabel="RC" itemValue="4"/>
+                                            </h:selectOneMenu>
+                                            <small id="tipodoc" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="numdoc">Numero de Documento</label>
+                                            <h:inputText class="form-control" value="#{personasBean.numeroDocumento}" id="numdoc"/>
+                                            <small id="numdoc" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <!--<div class="form-group col-lg-6">
+                                            <label for="fechanac">Fecha Nacimiento</label>
+                                            <h:inputText class="form-control" value="#{personasBean.fechaNacimiento}" id="fechanac"/>
+                                            <small id="fechanac" class="form-text text-muted"></small>
+                                        </div>-->
+                                        <div class="form-group col-lg-6">
+                                            <label for="lugarnac">Lugar de Nacimiento</label>
+                                            <h:selectOneMenu class="form-control" id="lugarnac" value="#{personasBean.lugarNacimiento}">
+                                                <f:selectItem itemLabel="Barranquilla" itemValue="1"/>
+                                                <f:selectItem itemLabel="Bogotá" itemValue="2"/>
+                                                <f:selectItem itemLabel="Cartagena" itemValue="3"/>
+                                                <f:selectItem itemLabel="Santa Marta" itemValue="4"/>
+                                            </h:selectOneMenu>
+                                            <small id="lugarnac" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="gruposang">Grupo Sanguineo</label>
+                                            <h:selectOneMenu class="form-control" id="gruposang" value="#{personasBean.grupoSanguineo}">
+                                                <f:selectItem itemLabel="A" itemValue="1"/>
+                                                <f:selectItem itemLabel="B" itemValue="2"/>
+                                                <f:selectItem itemLabel="AB" itemValue="3"/>
+                                                <f:selectItem itemLabel="O" itemValue="4"/>
+                                            </h:selectOneMenu>
+                                            <small id="gruposang" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="rh">RH</label>
+                                            <h:selectOneMenu class="form-control" id="rh" value="#{personasBean.rh}">
+                                                <f:selectItem itemLabel="Positivo" itemValue="Positivo"/>
+                                                <f:selectItem itemLabel="Negativo" itemValue="Negativo"/>
+                                            </h:selectOneMenu>
+                                            <small id="rh" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="sexo">Sexo</label>
+                                            <h:selectOneMenu class="form-control" id="sexo" value="#{personasBean.sexo}">
+                                                <f:selectItem itemLabel="Masculino" itemValue="1"/>
+                                                <f:selectItem itemLabel="Femenino" itemValue="2"/>
+                                            </h:selectOneMenu>
+                                            <small id="sexo" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="email">Email</label>
+                                            <h:inputText class="form-control" value="#{personasBean.email}" id="email"/>
+                                            <small id="email" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 text-right">
+                                    <h:commandLink action="#{personasBean.ingresarPersona()}" class="btn btn-success">
+                                        <i class="fa fa-save"/> Guardar
+                                    </h:commandLink>
+                                </div>
+                                <div class="col-lg-6 text-left">
+                                    <h:commandLink action="#{personasBean.actualizarPersona()}" class="btn btn-primary">
+                                        <i class="fa fa-check"/> Actualizar
+                                    </h:commandLink>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <h:commandLink action="#{personasBean.eliminarPersona()}" class="btn btn-danger">
+                                        <i class="fa fa-bed"/> Eliminar
+                                    </h:commandLink>
+                                </div>
+                            </div>
+
+                        </div>
+                    </h:form>
+                </c:if>
+                <c:if  test="#{val eq false}">
+                    <script>
+                        document.location.href = 'index2.html';
+                    </script>
+                </c:if>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

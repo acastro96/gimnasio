@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimRecurso" table="GIM_RECURSO" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA QUE ALMACENA LOS RECURSOS DE CADA MODULO DE LA PLATAFORMA</comment>
+        <id name="recId" type="big_decimal">
+            <column name="REC_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="gimModulo" class="Pojo.GimModulo" fetch="select">
+            <column name="MOD_ID" precision="22" scale="0" not-null="true">
+                <comment>MODULO AL CUAL PERTENECE EL RECURSO</comment>
+            </column>
+        </many-to-one>
+        <property name="recNombre" type="string">
+            <column name="REC_NOMBRE" length="100" not-null="true">
+                <comment>NOMBRE DEL RECURSO</comment>
+            </column>
+        </property>
+        <property name="recDescripcion" type="string">
+            <column name="REC_DESCRIPCION" length="200">
+                <comment>DESCRIPCION DEL RECURSO</comment>
+            </column>
+        </property>
+        <property name="recFechainicial" type="date">
+            <column name="REC_FECHAINICIAL" length="7" not-null="true">
+                <comment>FECHA INICIAL EN LA QUE SE HABILITA EL RECURSO</comment>
+            </column>
+        </property>
+        <property name="recFechafinal" type="date">
+            <column name="REC_FECHAFINAL" length="7">
+                <comment>FECHA EN LA QUE SE DESHABILITA EL RECURSO DEL SISTEMA</comment>
+            </column>
+        </property>
+        <property name="recCarpeta" type="string">
+            <column name="REC_CARPETA" length="250" not-null="true">
+                <comment>UBICACION DEL RECURSO</comment>
+            </column>
+        </property>
+        <property name="recFechaproceso" type="date">
+            <column name="REC_FECHAPROCESO" length="7">
+                <comment>FECHA EN LA QUE SE CREA EL REGISTRO</comment>
+            </column>
+        </property>
+        <property name="recEstado" type="big_decimal">
+            <column name="REC_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL RECURSO</comment>
+            </column>
+        </property>
+        <property name="recTipo" type="big_decimal">
+            <column name="REC_TIPO" precision="22" scale="0">
+                <comment>TIPO DE RECURSO</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
