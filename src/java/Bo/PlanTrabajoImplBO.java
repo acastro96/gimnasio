@@ -244,6 +244,7 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
 
     }
 
+    //Hay que hacer de nuevo este metodo
     @Override
     public void agregarPlanRut(PlanTrabajoBean planTrabajoBean) throws Exception {
 
@@ -377,6 +378,38 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
         }
     }
     
+    @Override
+    public void consultarRutina(PlanTrabajoBean planTrabajoBean) throws Exception {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        GimRutina gimRutina=null;
+        try {
+            
+            if(!planTrabajoBean.getCodigoRutina().equalsIgnoreCase("")){
+                gimRutina = getDaoRutina().getRutinaByCod(session, planTrabajoBean.getCodigoRutina());
+            }
+            
+            if(!planTrabajoBean.getNombreRutina().equalsIgnoreCase("")){
+                gimRutina = getDaoRutina().getRutinaByNom(session, planTrabajoBean.getNombreRutina());
+            }
+            
+            if(gimRutina==null){
+                planTrabajoBean.setCodeMensaje(2);
+                planTrabajoBean.setMensaje("La Rutina no existe");
+            }
+            
+            planTrabajoBean.setRutina(gimRutina);
+            planTrabajoBean.setNombreRutina(planTrabajoBean.getRutina().getRutNombre());
+            planTrabajoBean.setNombreRutina(planTrabajoBean.getRutina().getRutCodigo());
+            
+        } catch (Exception e) {
+        }finally {
+
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    
     /**
      * @return the daoPlanTrabajo
      */
@@ -446,5 +479,7 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
     public void setDaoParametros(ITParametros daoParametros) {
         this.daoParametros = daoParametros;
     }
+
+    
 
 }

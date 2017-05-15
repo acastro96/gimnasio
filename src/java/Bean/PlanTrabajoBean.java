@@ -51,6 +51,7 @@ public class PlanTrabajoBean implements Serializable{
     private String codigoRutina;
     private String parametroBusqueda;
     private String descripcionRutina;
+    private GimRutina rutina;
     
     //Lista de Parametros
     private Map<Integer, String> parTipoPlan;
@@ -122,6 +123,15 @@ public class PlanTrabajoBean implements Serializable{
     public void agregarRutina(){
         try {
             getPlanTrabajoBO().agregarPlanRut(this);
+        } catch (Exception e) {
+            setCodeMensaje(4);
+            setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
+        }
+    }
+    
+    public void consultarRutina(){
+        try {
+            getPlanTrabajoBO().consultarRutina(this);
         } catch (Exception e) {
             setCodeMensaje(4);
             setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
@@ -421,6 +431,20 @@ public class PlanTrabajoBean implements Serializable{
      */
     public void setDescripcionRutina(String descripcionRutina) {
         this.descripcionRutina = descripcionRutina;
+    }
+
+    /**
+     * @return the rutina
+     */
+    public GimRutina getRutina() {
+        return rutina;
+    }
+
+    /**
+     * @param rutina the rutina to set
+     */
+    public void setRutina(GimRutina rutina) {
+        this.rutina = rutina;
     }
     
 }

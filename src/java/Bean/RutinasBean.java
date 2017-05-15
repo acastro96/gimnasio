@@ -137,6 +137,18 @@ public class RutinasBean implements Serializable {
         }
         mostrarAlerta();
     }
+    
+    public void mostrarVideolista(String nombre)
+    {
+        try {
+            setNombre(nombre);
+            getRutinasBO().mostrarVideo(this);
+        } catch (Exception e) {
+            setCodeMensaje(4);
+            setMensaje(e.getMessage());
+        }
+        mostrarAlerta();
+    }
 
     public void mostrarAlerta() {
         if (getCodeMensaje() == 1) {

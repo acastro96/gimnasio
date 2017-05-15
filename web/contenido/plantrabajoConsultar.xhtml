@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 
     <body>
@@ -42,7 +43,7 @@
                                                     <div class="col-lg-3">
                                                         <label for="txtCodigo" class="white">Codigo</label>
                                                         <p:watermark for="txtCodigo" value="Digite Codigo" id="wtmCodigo" />
-                                                        <h:inputText id="txtCodigo" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.codigo}" class="form-control text-uppercase" maxlength="30">
+                                                        <h:inputText id="txtCodigo" a:placeholder="Digite el código" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.codigo}" class="form-control text-uppercase form-white" maxlength="30">
                                                         </h:inputText>
                                                     </div>
                                                     <div class="col-lg-2">
@@ -62,7 +63,7 @@
                                                     <div class="col-lg-3">
                                                         <label for="txtNombre" class="white">Nombre</label>
                                                         <p:watermark for="txtNombre" value="Digite Nombre" id="wtmNombre" />
-                                                        <h:inputText id="txtNombre" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.nombre}" class="form-control text-uppercase" maxlength="30">
+                                                        <h:inputText id="txtNombre" a:placeholder="Digite el Nombre" onkeyup="valida_caracteres(this, 'special')" value="#{planTrabajoBean.nombre}" class="form-control text-uppercase form-white" maxlength="30">
                                                         </h:inputText>
                                                     </div>
                                                     <div class="col-lg-2">
@@ -161,9 +162,7 @@
                                                             <div class="col-lg-4 col-xs-3">
                                                                 <div class="form-group">
                                                                     <h:outputText  class="control-label white" value="Tipo Plan de Trabajo"></h:outputText>
-                                                                    <h:selectOneMenu id="slcTipoPlan" class="form-control form-white"  value="#{planTrabajoBean.tipoEjercicio}">
-                                                                        <f:selectItems value="#{planTrabajoBean}" var="listTipoPlan" itemValue="#{listTipoPlan.code}" itemLabel="#{listTipoPlan.nombreP}"></f:selectItems>
-                                                                    </h:selectOneMenu>
+                                                                    <h:inputText id="slcTipoPlan" class="form-control form-white"  value="#{planTrabajoBean.tipoEjercicio}"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -178,33 +177,71 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <div class="col-lg-12 col-md-12" style="text-align: right;">
+                                                        <!-- Esto debe llamar a una modal no a este metodo, se tiene que revisar-->
+                                                        <a data-toggle="modal" data-target="#modalRutina">
+                                                            <i class="fa fa-plus"/> Agregar Rutina
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-lg-12 col-md-12">
                                                         <h:dataTable id="tbRutinas" value="#{planTrabajoBean.listaRutinas}" var="list" class="table table-bordered">
                                                             <h:column id="nombreRut">
-                                                                <f:facet name="header" class="white">Nombre</f:facet>
+                                                                <f:facet name="header" class="white"><h:outputText class="white" value="Nombre"/></f:facet>
                                                                 <h:outputText class="white" value="#{list.rutNombre}"/>
                                                             </h:column>
                                                             <h:column id="codigoRut">
-                                                                <f:facet name="header" class="white">Codigo</f:facet>
+                                                                <f:facet name="header" class="white"><h:outputText class="white" value="Código"/></f:facet>
                                                                 <h:outputText class="white" value="#{list.rutCodigo}"/>
                                                             </h:column>
                                                             <h:column id="repeticionesRut">
-                                                                <f:facet name="header" class="white">Repeticiones</f:facet>
+                                                                <f:facet name="header"><h:outputText class="white" value="Repeticiones"/></f:facet>
                                                                 <h:outputText class="white" value="#{list.rutRepeticiones}"/>
                                                             </h:column>
                                                             <h:column id="caloriasRut">
-                                                                <f:facet name="header" class="white">Calorias Trabajadas</f:facet>
+                                                                <f:facet name="header" class="white"><h:outputText class="white" value="Calorias Trabajadas"/></f:facet>
                                                                 <h:outputText class="white" value="#{list.rutCalorias}"/>
                                                             </h:column>
-                                                            <h:column id="estado">
-                                                                <f:facet class="white" name="header">Video</f:facet>
-                                                                <h:outputText class="white" value="#{list.estado}"/>
+                                                            <h:column id="video">
+                                                                <f:facet name="header" class="white"><h:outputText class="white" value="Video"/></f:facet>
+                                                                <h:commandLink>
+                                                                    <f:ajax event="click" listener="#{rutinasBean.mostrarVideo()}"/>
+                                                                    <i class="fa fa-video-camera"/>
+                                                                </h:commandLink>
                                                             </h:column>
                                                         </h:dataTable>
                                                     </div>
                                                 </div>
                                             </div><!-- /.row -->
                                         </section>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modalRutina" tabindex="-1" role="dialog" aria-labelledby="modalRutina" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content modal-popup">
+                                            <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
+                                            <h3 class="white">Añadir Rutina</h3>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <h:inputText id="rutcodigo" value="#{planTrabajoBean.codigoRutina}" a:placeholder="Codigo de Rutina" class="form-control form-white" >
+                                                        <f:ajax event="blur" listener="#{planTrabajoBean.consultarRutina()}" render="rutcodigo rutnombre"/>
+                                                    </h:inputText>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h:inputText id="rutnombre" value="#{planTrabajoBean.nombreRutina}" a:placeholder="Nombre de Rutina" class="form-control form-white" >
+                                                        <f:ajax event="blur" listener="#{planTrabajoBean.consultarRutina()}" render="rutcodigo rutnombre"/>
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 text-center">
+                                                    <h:commandLink class="btn btn-submit" > Añadir
+                                                        <f:ajax event="click" listener="#{planTrabajoBean.agregarRutina()}" execute="@form" render="formPlanConsulta:detalle:tbRutinas"/>
+                                                    </h:commandLink>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </h:panelGroup>

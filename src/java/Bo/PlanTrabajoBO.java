@@ -27,5 +27,7 @@ public interface PlanTrabajoBO {
     
     void llenarParametros (PlanTrabajoBean planTrabajoBean) throws Exception;
     
+    void consultarRutina(PlanTrabajoBean planTrabajoBean) throws Exception;
+    
     
 }

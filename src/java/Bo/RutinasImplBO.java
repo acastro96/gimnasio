@@ -305,6 +305,23 @@ public class RutinasImplBO implements RutinasBO {
             return null;
         }
     }
+    
+//    @Override
+//    public void mostrarVideolist(RutinasBean rutinasBean) throws Exception {
+//        try {
+//
+//            FacesContext face = FacesContext.getCurrentInstance();
+//
+//            String x = " window.open('video.xhtml','mywindow', 'resizable=no,toolbar=no,scrollbars=yes,height=450,width=530,top=145,left=235');";
+//            face.getExternalContext().getSessionMap().put("video", rutinasBean.getNombre() + ".mp4");
+//            RequestContext requestContext = RequestContext.getCurrentInstance();
+//            requestContext.execute(x);
+//            FacesMessage msg = new FacesMessage("", rutinasBean.getNombre() + " está cargado");
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//
+//        } catch (Exception e) {
+//        }
+//    }
 
     /**
      * @return the daoRutina
@@ -333,5 +350,7 @@ public class RutinasImplBO implements RutinasBO {
     public void setDaoVideo(ITVideo daoVideo) {
         this.daoVideo = daoVideo;
     }
+
+    
 
 }

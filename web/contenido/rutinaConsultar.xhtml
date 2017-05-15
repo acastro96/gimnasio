@@ -95,7 +95,7 @@
                                             <h:column>
                                                 <f:facet name="header"><h:outputText class="white" value="Video"/></f:facet>
                                                 <h:commandLink>
-                                                    <f:ajax event="click" listener="#{rutinasBean.mostrarVideo()}"/>
+                                                    <f:ajax event="click" listener="#{rutinasBean.mostrarVideolista(listRutina.rutNombre)}"/>
                                                     <i class="fa fa-video-camera"/>
                                                 </h:commandLink>
                                             </h:column>

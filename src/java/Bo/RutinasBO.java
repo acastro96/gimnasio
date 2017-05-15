@@ -23,6 +23,8 @@ public interface RutinasBO {
     
     void mostrarVideo(RutinasBean rutinasBean) throws Exception;
     
+    //void mostrarVideolist(RutinasBean rutinasBean) throws Exception;
+    
     List<GimRutina> listaRutinas(RutinasBean rutinasBean) throws Exception;
     
     
