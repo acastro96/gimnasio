@@ -38,7 +38,7 @@ public class DaoPlanTrabajo implements ITPlanTrabajo{
     @Override
     public GimPlanTrabajo getPlanTrabajoByID(Session session, BigDecimal id) throws Exception {
         return (GimPlanTrabajo) session.createCriteria(GimPlanTrabajo.class)
-                .add(Restrictions.eq("planid", id))
+                .add(Restrictions.eq("planId", id))
                 .uniqueResult();
     }
 

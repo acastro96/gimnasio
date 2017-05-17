@@ -164,9 +164,36 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
             }
 
             gimUsuario = getDaoUsuario().getUsuarioByID(session, BigDecimal.valueOf(planTrabajoBean.getLoginBean().getIdusuario()));
+            
+            gimPlanTrabajo = new GimPlanTrabajo(BigDecimal.ZERO, gimUsuario, planTrabajoBean.getDescripcion(), planTrabajoBean.getNombre(), BigDecimal.valueOf(planTrabajoBean.getTipoEjercicio()), null, BigDecimal.ONE, planTrabajoBean.getCodigo());
 
-            getDaoPlanTrabajo().insert(session, new GimPlanTrabajo(BigDecimal.ZERO, gimUsuario, planTrabajoBean.getDescripcion(), planTrabajoBean.getNombre(), BigDecimal.valueOf(planTrabajoBean.getTipoEjercicio()), null, BigDecimal.ONE, planTrabajoBean.getCodigo()));
+            int idPlan = getDaoPlanTrabajo().insert(session, gimPlanTrabajo);
+            
+            gimPlanTrabajo.setPlanId(BigDecimal.valueOf(idPlan));
 
+            transaction.commit();
+            transaction = session.beginTransaction();
+            
+            if(planTrabajoBean.getListaRutinas()!=null){
+                
+                GimPlanRut gimPlanRut;
+                GimPlanRutId gimPlanRutId;
+                
+                for (GimRutina list : planTrabajoBean.getListaRutinas()) {
+                    gimPlanRut = getDaoPlanRut().getByIdPlanIdRut(session, gimPlanTrabajo.getPlanId(), list.getRutId());
+                    if(gimPlanRut != null){
+                        break;
+                    }
+                    
+                    gimPlanRutId = new GimPlanRutId(gimPlanTrabajo.getPlanId(), list.getRutId());
+                    
+                    gimPlanRut = new GimPlanRut(gimPlanRutId, gimPlanTrabajo, list);
+                    
+                    getDaoPlanRut().insert(session, gimPlanRut);
+                    
+                }
+                
+            }
             transaction.commit();
 
             planTrabajoBean.setCodeMensaje(1);
@@ -253,54 +280,48 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
         Transaction transaction = session.beginTransaction();
 
         //Todas las tablas que se van a utilizar en insercion y consulta, cabe resaltar que las de solo insercion no es necesario instanciarlas
-        GimPlanTrabajo gimPlanTrabajo;
-        GimPlanRut gimPlanRut;
-        GimPlanRutId gimPlanRutId;
-        GimRutina gimRutina;
+//        GimPlanTrabajo gimPlanTrabajo;
+//        GimPlanRut gimPlanRut;
+//        GimPlanRutId gimPlanRutId;
+//        GimRutina gimRutina;
         List<GimRutina> listaRutinas = new LinkedList<>();
 
         try {
 
-            //Como se va buscar por nombre o codigo el parametro de busqueda es uno solo pero se hacen las dos busquedas a la vez, si una es nula entonces
-            //se procede con la otra y si las dos son nulas quiere decir que la Rutina no existe y manda error
-            if (planTrabajoBean.getParametroBusqueda().equalsIgnoreCase("")) {
-                planTrabajoBean.setCodeMensaje(2);
-                planTrabajoBean.setMensaje("Digite el parametro de busqueda");
-                return;
-            }
-
-            gimRutina = getDaoRutina().getRutinaByCod(session, planTrabajoBean.getParametroBusqueda());
-
-            if (gimRutina == null) {
-                gimRutina = getDaoRutina().getRutinaByNom(session, planTrabajoBean.getParametroBusqueda());
-            }
-
-            if (gimRutina == null) {
+            if(planTrabajoBean.getRutina() == null){
                 planTrabajoBean.setCodeMensaje(3);
                 planTrabajoBean.setMensaje("Rutina no encontrada. Verifique la información");
                 return;
             }
-
-            planTrabajoBean.setNombreRutina(gimRutina.getRutNombre());
-
-            if (!planTrabajoBean.getNombre().equalsIgnoreCase("")) {
-                gimPlanTrabajo = getDaoPlanTrabajo().getPlanTrabajoByNom(session, planTrabajoBean.getNombre());
-            } else {
-                gimPlanTrabajo = getDaoPlanTrabajo().getPlanTrabajoByCod(session, planTrabajoBean.getCodigo());
-            }
-
-            gimPlanRutId = new GimPlanRutId(gimPlanTrabajo.getPlanId(), gimRutina.getRutId());
-
-            daoPlanRut.insert(session, new GimPlanRut(gimPlanRutId,gimPlanTrabajo, gimRutina));
             
-            if (planTrabajoBean.getListaRutinas() == null) {
-                listaRutinas.add(gimRutina);
+            if(planTrabajoBean.getListaRutinas()!=null){
+                
+                for (GimRutina list : planTrabajoBean.getListaRutinas()) {
+                    if(list.getRutId()==planTrabajoBean.getRutina().getRutId()){
+                        planTrabajoBean.setCodeMensaje(3);
+                        planTrabajoBean.setMensaje("La Rutina ya pertenece al Plan de Trabajo");
+                        return;
+                    }
+                }
+            }else{
                 planTrabajoBean.setListaRutinas(listaRutinas);
-            } else {
-                planTrabajoBean.getListaRutinas().add(gimRutina);
             }
-
-            transaction.commit();
+            
+            planTrabajoBean.getListaRutinas().add(planTrabajoBean.getRutina());
+            
+            
+//            gimPlanRutId = new GimPlanRutId(gimPlanTrabajo.getPlanId(), gimRutina.getRutId());
+//
+//            daoPlanRut.insert(session, new GimPlanRut(gimPlanRutId,gimPlanTrabajo, gimRutina));
+//            
+//            if (planTrabajoBean.getListaRutinas() == null) {
+//                listaRutinas.add(gimRutina);
+//                planTrabajoBean.setListaRutinas(listaRutinas);
+//            } else {
+//                planTrabajoBean.getListaRutinas().add(gimRutina);
+//            }
+//
+//            transaction.commit();
 
         } catch (Exception e) {
             if (transaction != null) {
@@ -330,7 +351,7 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
             listaPlanRuts = getDaoPlanRut().getPlanRutByIdPlan(session, gimPlanTrabajo.getPlanId());
 
             for (GimPlanRut objPlanRut : listaPlanRuts) {
-                gimRutina = getDaoRutina().getRutinaByID(session, objPlanRut.getGimRutina().getRutId());
+                gimRutina = getDaoRutina().getRutinaByID(session, objPlanRut.getId().getRutId());
                 listaRutinas.add(gimRutina);
             }
 
@@ -399,9 +420,10 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
             
             planTrabajoBean.setRutina(gimRutina);
             planTrabajoBean.setNombreRutina(planTrabajoBean.getRutina().getRutNombre());
-            planTrabajoBean.setNombreRutina(planTrabajoBean.getRutina().getRutCodigo());
+            planTrabajoBean.setCodigoRutina(planTrabajoBean.getRutina().getRutCodigo());
             
         } catch (Exception e) {
+            
         }finally {
 
             if (session != null) {

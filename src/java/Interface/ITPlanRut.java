@@ -16,12 +16,14 @@ import org.hibernate.Session;
  */
 public interface ITPlanRut {
     
-    int insert(Session session, GimPlanRut planRut)throws Exception;
+    void insert(Session session, GimPlanRut planRut)throws Exception;
     
     boolean update(Session session, GimPlanRut planRut)throws Exception;
     
     List<GimPlanRut> getAll(Session session)throws Exception;
     
     List<GimPlanRut> getPlanRutByIdPlan(Session session, BigDecimal idPlan) throws Exception;
+    
+    GimPlanRut getByIdPlanIdRut(Session session, BigDecimal idPlan, BigDecimal idRut) throws Exception;
     
 }

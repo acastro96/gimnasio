@@ -138,12 +138,7 @@
                                             <!-- info row -->
                                             <div class="row invoice-info">
                                                 <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <p:messages closable="true" id="msgdet" showDetail="true" />
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-12">
+                                                    <div class="col-lg-12 col-md-12">
                                                         <div class="row">
                                                             <div class="col-lg-4 col-xs-3">
                                                                 <div class="form-group">
@@ -155,7 +150,7 @@
                                                             <div class="col-lg-4 col-xs-3">
                                                                 <div class="form-group">
                                                                     <label for="txtDetCodigo" class="white">Codigo</label>
-                                                                    <h:inputText id="txtDetCodigo" class="form-white" readonly="true" value="#{planTrabajoBean.codigo}" maxlength="30">
+                                                                    <h:inputText id="txtDetCodigo" class="form-control form-white" readonly="true" value="#{planTrabajoBean.codigo}" maxlength="30">
                                                                     </h:inputText><!--VALUE OK-->
                                                                 </div>
                                                             </div>
@@ -174,14 +169,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-md-12" style="text-align: right;">
-                                                        <!-- Esto debe llamar a una modal no a este metodo, se tiene que revisar-->
-                                                        <a data-toggle="modal" data-target="#modalRutina">
-                                                            <i class="fa fa-plus"/> Agregar Rutina
-                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -206,7 +193,7 @@
                                                             <h:column id="video">
                                                                 <f:facet name="header" class="white"><h:outputText class="white" value="Video"/></f:facet>
                                                                 <h:commandLink>
-                                                                    <f:ajax event="click" listener="#{rutinasBean.mostrarVideo()}"/>
+                                                                    <f:ajax event="click" listener="#{rutinasBean.mostrarVideolista(list.rutNombre)}"/>
                                                                     <i class="fa fa-video-camera"/>
                                                                 </h:commandLink>
                                                             </h:column>
@@ -215,33 +202,6 @@
                                                 </div>
                                             </div><!-- /.row -->
                                         </section>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="modalRutina" tabindex="-1" role="dialog" aria-labelledby="modalRutina" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content modal-popup">
-                                            <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
-                                            <h3 class="white">Añadir Rutina</h3>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <h:inputText id="rutcodigo" value="#{planTrabajoBean.codigoRutina}" a:placeholder="Codigo de Rutina" class="form-control form-white" >
-                                                        <f:ajax event="blur" listener="#{planTrabajoBean.consultarRutina()}" render="rutcodigo rutnombre"/>
-                                                    </h:inputText>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <h:inputText id="rutnombre" value="#{planTrabajoBean.nombreRutina}" a:placeholder="Nombre de Rutina" class="form-control form-white" >
-                                                        <f:ajax event="blur" listener="#{planTrabajoBean.consultarRutina()}" render="rutcodigo rutnombre"/>
-                                                    </h:inputText>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 text-center">
-                                                    <h:commandLink class="btn btn-submit" > Añadir
-                                                        <f:ajax event="click" listener="#{planTrabajoBean.agregarRutina()}" execute="@form" render="formPlanConsulta:detalle:tbRutinas"/>
-                                                    </h:commandLink>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </h:panelGroup>

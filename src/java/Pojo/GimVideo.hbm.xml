@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 28/04/2017 10:08:55 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 16/05/2017 10:24:15 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.GimVideo" table="GIM_VIDEO" schema="ALBERTO" optimistic-lock="version">
         <comment>VIDEOS QUE SE ALMACENAN PARA CADA RUTINA</comment>

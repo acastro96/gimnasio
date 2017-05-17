@@ -19,8 +19,8 @@ import org.hibernate.criterion.Restrictions;
 public class DaoPlanRut implements ITPlanRut{
 
     @Override
-    public int insert(Session session, GimPlanRut planRut) throws Exception {
-        return Integer.parseInt(session.save(planRut).toString());
+    public void insert(Session session, GimPlanRut planRut) throws Exception {
+        session.save(planRut);
     }
 
     @Override
@@ -39,6 +39,14 @@ public class DaoPlanRut implements ITPlanRut{
         return  session.createCriteria(GimPlanRut.class)
                 .add(Restrictions.eq("id.planId", idPlan))
                 .list();
+    }
+
+    @Override
+    public GimPlanRut getByIdPlanIdRut(Session session, BigDecimal idPlan, BigDecimal idRut) throws Exception {
+        return (GimPlanRut) session.createCriteria(GimPlanRut.class)
+                .add(Restrictions.eq("id.planId", idPlan))
+                .add(Restrictions.eq("id.rutId", idRut))
+                .uniqueResult();
     }
     
 }
