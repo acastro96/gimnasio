@@ -17,13 +17,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author Alberto Castro
  */
-
-@ManagedBean (name = "clientesBean")
+@ManagedBean(name = "clientesBean")
 @ViewScoped
 public class ClientesBean {
 
@@ -43,39 +43,47 @@ public class ClientesBean {
     private String celular;
     private String direccion;
     private String email;
-    
-   //Información del Usuario
+
+    //Información del Usuario
     private String usuNom;
     private String usuPass;
     private String usuConpass;
-    
+
     //Campos adicionales con los que se manejan las validaciones y los mensajes
     private boolean status = true;
     private int codeMensaje;
     private String mensaje;
+    private boolean encabezado = true;
     private boolean detalle = false;
+    private boolean planAsignar = false;
     private int tipo;
     private BigDecimal id;
     private List<GimCliente> listClientes;
-    
+
     //Listas de Parametros
     private Map<Integer, String> parTipoDocumento;
     private Map<Integer, String> parLugarNacimiento;
     private Map<Integer, String> parGrupoSanguineo;
     private Map<Integer, String> parSexo;
     private Map<Integer, String> parPreferencias;
-    
-    
+
+    //Lista de Instructores para asignarlo al cliente
+    private Map<BigDecimal, String> listInstructores;
+    private BigDecimal idInstructor;
+
+    //Listas de Planes de Trabajos para asignar y Plan de Trabajo escogido
+    private Map<BigDecimal, String> planesAsignar;
+    private BigDecimal idPlan;
+
     //Informacion que se va a insertar en cliente
     private String descripcion;
     private int tipoPlanPreferencia;
     private ClienteBO clienteBO;
     private String codigo;
     private String estado;
-    
+
     @PostConstruct
-    public void init()
-    {
+    public void init() {
         setClienteBO(new ClienteImplBO());
         try {
             getClienteBO().llenarParametros(this);
@@ -84,20 +92,18 @@ public class ClientesBean {
             setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
         }
     }
-    
-    public void ingresarCliente()
-    {   
+
+    public void ingresarCliente() {
         try {
-           getClienteBO().agregarCliente(this);
+            getClienteBO().agregarCliente(this);
         } catch (Exception e) {
-            
             setCodeMensaje(4);
             setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
         }
         mostrarAlerta();
     }
-    
-    public void actualizarCliente(){
+
+    public void actualizarCliente() {
         try {
             getClienteBO().actualizarCliente(this);
         } catch (Exception e) {
@@ -106,9 +112,9 @@ public class ClientesBean {
         }
         mostrarAlerta();
     }
-    
+
     //Metodo que llama a la lista de clientes y asigna que tipo de busqueda voy a hacer (Codigo, Documento o Nombre)
-    public void consultarCliente(int tipo){
+    public void consultarCliente(int tipo) {
         try {
             setTipo(tipo);
             setListClientes(listaClientes());
@@ -118,9 +124,9 @@ public class ClientesBean {
         }
         mostrarAlerta();
     }
-    
+
     //Devolvemos una lista con la que vamos a llenar una tabla en la que se hacen las consultas
-    public List<GimCliente> listaClientes(){
+    public List<GimCliente> listaClientes() {
         try {
             return getClienteBO().listaClientes(this);
         } catch (Exception e) {
@@ -129,26 +135,53 @@ public class ClientesBean {
         }
         return null;
     }
-    
-    public void mostrarCliente(BigDecimal id){
+
+    public void mostrarCliente(BigDecimal idCliente) {
         try {
-            setId(id);
+            setId(idCliente);
             getClienteBO().mostrarCliente(this);
             setDetalle(true);
+            setEncabezado(false);
         } catch (Exception e) {
             setCodeMensaje(4);
             setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
         }
         mostrarAlerta();
     }
-    
-    public String getTipoDocumento(int par){
+
+    public void cargarPlanesAsignar(BigDecimal idCliente) {
+        try {
+            setId(idCliente);
+            getClienteBO().planesDisponibles(this);
+        } catch (Exception e) {
+            setCodeMensaje(4);
+            setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
+        }
+    }
+
+    public void mostrarAsignarPlan(BigDecimal idCliente) {
+        cargarPlanesAsignar(idCliente);
+        mostrarAlerta();
+    }
+
+    public void asignarPlan() {
+        try {
+            getClienteBO().asignarPlan(this);
+        } catch (Exception e) {
+            setCodeMensaje(4);
+            setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
+        }
+        mostrarAlerta();
+    }
+
+    public String getTipoDocumento(int par) {
         return parTipoDocumento.get(par);
     }
-    public String getTipoPreferencia(int par){
+
+    public String getTipoPreferencia(int par) {
         return parPreferencias.get(par);
     }
-    
+
     public void mostrarAlerta() {
         if (getCodeMensaje() == 1) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", getMensaje()));
@@ -541,7 +574,7 @@ public class ClientesBean {
     public void setDetalle(boolean detalle) {
         this.detalle = detalle;
     }
-    
+
     /**
      * @return the parTipoDocumento
      */
@@ -597,7 +630,7 @@ public class ClientesBean {
     public void setListClientes(List<GimCliente> listaClientes) {
         this.listClientes = listaClientes;
     }
-    
+
     /**
      * @return the parLugarNacimiento
      */
@@ -652,5 +685,89 @@ public class ClientesBean {
      */
     public void setParPreferencias(Map<Integer, String> parPreferencias) {
         this.parPreferencias = parPreferencias;
+    }
+
+    /**
+     * @return the planesAsignar
+     */
+    public Map<BigDecimal, String> getPlanesAsignar() {
+        return planesAsignar;
+    }
+
+    /**
+     * @param planesAsignar the planesAsignar to set
+     */
+    public void setPlanesAsignar(Map<BigDecimal, String> planesAsignar) {
+        this.planesAsignar = planesAsignar;
+    }
+
+    /**
+     * @return the idPlan
+     */
+    public BigDecimal getIdPlan() {
+        return idPlan;
+    }
+
+    /**
+     * @param idPlan the idPlan to set
+     */
+    public void setIdPlan(BigDecimal idPlan) {
+        this.idPlan = idPlan;
+    }
+
+    /**
+     * @return the listInstructores
+     */
+    public Map<BigDecimal, String> getListInstructores() {
+        return listInstructores;
+    }
+
+    /**
+     * @param listInstructores the listInstructores to set
+     */
+    public void setListInstructores(Map<BigDecimal, String> listInstructores) {
+        this.listInstructores = listInstructores;
+    }
+
+    /**
+     * @return the idInstructor
+     */
+    public BigDecimal getIdInstructor() {
+        return idInstructor;
+    }
+
+    /**
+     * @param idInstructor the idInstructor to set
+     */
+    public void setIdInstructor(BigDecimal idInstructor) {
+        this.idInstructor = idInstructor;
+    }
+
+    /**
+     * @return the planAsignar
+     */
+    public boolean isPlanAsignar() {
+        return planAsignar;
+    }
+
+    /**
+     * @param planAsignar the planAsignar to set
+     */
+    public void setPlanAsignar(boolean planAsignar) {
+        this.planAsignar = planAsignar;
+    }
+
+    /**
+     * @return the encabezado
+     */
+    public boolean isEncabezado() {
+        return encabezado;
+    }
+
+    /**
+     * @param encabezado the encabezado to set
+     */
+    public void setEncabezado(boolean encabezado) {
+        this.encabezado = encabezado;
     }
 }

@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16/05/2017 10:24:10 PM by Hibernate Tools 4.3.1
+// Generated 18/05/2017 12:10:35 AM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -21,6 +21,7 @@ public class GimPlanTrabajo  implements java.io.Serializable {
      private Date planFechaproceso;
      private BigDecimal planEstado;
      private String planCodigo;
+     private Set gimPlanClientes = new HashSet(0);
      private Set gimPlanRuts = new HashSet(0);
 
     public GimPlanTrabajo() {
@@ -102,6 +103,13 @@ public class GimPlanTrabajo  implements java.io.Serializable {
     
     public void setPlanCodigo(String planCodigo) {
         this.planCodigo = planCodigo;
+    }
+    public Set getGimPlanClientes() {
+        return this.gimPlanClientes;
+    }
+    
+    public void setGimPlanClientes(Set gimPlanClientes) {
+        this.gimPlanClientes = gimPlanClientes;
     }
     public Set getGimPlanRuts() {
         return this.gimPlanRuts;

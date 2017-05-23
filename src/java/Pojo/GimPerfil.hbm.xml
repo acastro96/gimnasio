@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16/05/2017 10:24:15 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 18/05/2017 12:10:36 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.GimPerfil" table="GIM_PERFIL" schema="ALBERTO" optimistic-lock="version">
         <comment>TABLA EN DONDE SE REGISTRAN TODOS LOS PERFILES QUE TIENE LA PLATAFORMA</comment>

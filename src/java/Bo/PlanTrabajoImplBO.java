@@ -6,17 +6,26 @@
 package Bo;
 
 import Bean.PlanTrabajoBean;
+import Dao.DaoCliente;
 import Dao.DaoParametros;
+import Dao.DaoPersona;
+import Dao.DaoPlanCliente;
 import Dao.DaoPlanRut;
 import Dao.DaoPlanTrabajo;
 import Dao.DaoRutina;
 import Dao.DaoUsuario;
+import Interface.ITCliente;
 import Interface.ITParametros;
+import Interface.ITPersona;
+import Interface.ITPlanCliente;
 import Interface.ITPlanRut;
 import Interface.ITPlanTrabajo;
 import Interface.ITRutina;
 import Interface.ITUsuario;
+import Pojo.GimCliente;
 import Pojo.GimParametros;
+import Pojo.GimPersona;
+import Pojo.GimPlanCliente;
 import Pojo.GimPlanRut;
 import Pojo.GimPlanRutId;
 import Pojo.GimPlanTrabajo;
@@ -40,13 +49,19 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
     private ITUsuario daoUsuario;
     private ITPlanRut daoPlanRut;
     private ITParametros daoParametros;
-    
-    public PlanTrabajoImplBO(){
+    private ITPersona daoPersona;
+    private ITCliente daoCliente;
+    private ITPlanCliente daoPlanCliente;
+
+    public PlanTrabajoImplBO() {
         daoPlanTrabajo = new DaoPlanTrabajo();
         daoRutina = new DaoRutina();
         daoPlanRut = new DaoPlanRut();
         daoUsuario = new DaoUsuario();
         daoParametros = new DaoParametros();
+        daoPersona = new DaoPersona();
+        daoCliente = new DaoCliente();
+        daoPlanCliente = new DaoPlanCliente();
     }
 
     @Override
@@ -164,35 +179,35 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
             }
 
             gimUsuario = getDaoUsuario().getUsuarioByID(session, BigDecimal.valueOf(planTrabajoBean.getLoginBean().getIdusuario()));
-            
+
             gimPlanTrabajo = new GimPlanTrabajo(BigDecimal.ZERO, gimUsuario, planTrabajoBean.getDescripcion(), planTrabajoBean.getNombre(), BigDecimal.valueOf(planTrabajoBean.getTipoEjercicio()), null, BigDecimal.ONE, planTrabajoBean.getCodigo());
 
             int idPlan = getDaoPlanTrabajo().insert(session, gimPlanTrabajo);
-            
+
             gimPlanTrabajo.setPlanId(BigDecimal.valueOf(idPlan));
 
             transaction.commit();
             transaction = session.beginTransaction();
-            
-            if(planTrabajoBean.getListaRutinas()!=null){
-                
+
+            if (planTrabajoBean.getListaRutinas() != null) {
+
                 GimPlanRut gimPlanRut;
                 GimPlanRutId gimPlanRutId;
-                
+
                 for (GimRutina list : planTrabajoBean.getListaRutinas()) {
                     gimPlanRut = getDaoPlanRut().getByIdPlanIdRut(session, gimPlanTrabajo.getPlanId(), list.getRutId());
-                    if(gimPlanRut != null){
+                    if (gimPlanRut != null) {
                         break;
                     }
-                    
+
                     gimPlanRutId = new GimPlanRutId(gimPlanTrabajo.getPlanId(), list.getRutId());
-                    
+
                     gimPlanRut = new GimPlanRut(gimPlanRutId, gimPlanTrabajo, list);
-                    
+
                     getDaoPlanRut().insert(session, gimPlanRut);
-                    
+
                 }
-                
+
             }
             transaction.commit();
 
@@ -288,28 +303,27 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
 
         try {
 
-            if(planTrabajoBean.getRutina() == null){
+            if (planTrabajoBean.getRutina() == null) {
                 planTrabajoBean.setCodeMensaje(3);
                 planTrabajoBean.setMensaje("Rutina no encontrada. Verifique la información");
                 return;
             }
-            
-            if(planTrabajoBean.getListaRutinas()!=null){
-                
+
+            if (planTrabajoBean.getListaRutinas() != null) {
+
                 for (GimRutina list : planTrabajoBean.getListaRutinas()) {
-                    if(list.getRutId()==planTrabajoBean.getRutina().getRutId()){
+                    if (list.getRutId() == planTrabajoBean.getRutina().getRutId()) {
                         planTrabajoBean.setCodeMensaje(3);
                         planTrabajoBean.setMensaje("La Rutina ya pertenece al Plan de Trabajo");
                         return;
                     }
                 }
-            }else{
+            } else {
                 planTrabajoBean.setListaRutinas(listaRutinas);
             }
-            
+
             planTrabajoBean.getListaRutinas().add(planTrabajoBean.getRutina());
-            
-            
+
 //            gimPlanRutId = new GimPlanRutId(gimPlanTrabajo.getPlanId(), gimRutina.getRutId());
 //
 //            daoPlanRut.insert(session, new GimPlanRut(gimPlanRutId,gimPlanTrabajo, gimRutina));
@@ -322,7 +336,6 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
 //            }
 //
 //            transaction.commit();
-
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -339,7 +352,7 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
     public void mostrarPlanTrabajo(PlanTrabajoBean planTrabajoBean) throws Exception {
         //Esta sesión se declara porque es la que se va a enviar a la hora de hacer las consultas
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        
+
         GimPlanTrabajo gimPlanTrabajo;
         GimRutina gimRutina;
         List<GimPlanRut> listaPlanRuts;
@@ -361,6 +374,7 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
             planTrabajoBean.setNombre(gimPlanTrabajo.getPlanNombre());
             planTrabajoBean.setEstado(gimPlanTrabajo.getPlanEstado().intValue() == 1 ? "ACTIVO" : "INACTIVO");
             planTrabajoBean.setTipoEjercicio(gimPlanTrabajo.getPlanTipoEjercicio().intValue());
+            planTrabajoBean.setDetalle(true);
 
             planTrabajoBean.setCodeMensaje(1);
             planTrabajoBean.setMensaje("Consulta exitosa");
@@ -373,18 +387,18 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
             }
         }
     }
-    
+
     @Override
     public void llenarParametros(PlanTrabajoBean planTrabajoBean) throws Exception {
-        
+
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        
+
         List<GimParametros> listParametros;
-        
+
         try {
 
             planTrabajoBean.setParTipoPlan(new LinkedHashMap<Integer, String>());
-            
+
             //Tipos de Planes de trabajo
             listParametros = getDaoParametros().getParametroByGrupo(session, BigDecimal.valueOf(8));
             for (GimParametros objParametro : listParametros) {
@@ -398,40 +412,75 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
             }
         }
     }
-    
+
     @Override
     public void consultarRutina(PlanTrabajoBean planTrabajoBean) throws Exception {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        GimRutina gimRutina=null;
+        GimRutina gimRutina = null;
         try {
-            
-            if(!planTrabajoBean.getCodigoRutina().equalsIgnoreCase("")){
+
+            if (!planTrabajoBean.getCodigoRutina().equalsIgnoreCase("")) {
                 gimRutina = getDaoRutina().getRutinaByCod(session, planTrabajoBean.getCodigoRutina());
             }
-            
-            if(!planTrabajoBean.getNombreRutina().equalsIgnoreCase("")){
+
+            if (!planTrabajoBean.getNombreRutina().equalsIgnoreCase("")) {
                 gimRutina = getDaoRutina().getRutinaByNom(session, planTrabajoBean.getNombreRutina());
             }
-            
-            if(gimRutina==null){
+
+            if (gimRutina == null) {
                 planTrabajoBean.setCodeMensaje(2);
                 planTrabajoBean.setMensaje("La Rutina no existe");
             }
-            
+
             planTrabajoBean.setRutina(gimRutina);
             planTrabajoBean.setNombreRutina(planTrabajoBean.getRutina().getRutNombre());
             planTrabajoBean.setCodigoRutina(planTrabajoBean.getRutina().getRutCodigo());
-            
+
         } catch (Exception e) {
-            
-        }finally {
+
+        } finally {
 
             if (session != null) {
                 session.close();
             }
         }
     }
-    
+
+    @Override
+    public void cargarPlanCliente(PlanTrabajoBean planTrabajoBean) throws Exception {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+
+        try {
+
+            GimUsuario gimUsuario;
+            GimPersona gimPersona;
+            GimCliente gimCliente;
+            GimPlanCliente gimPlanCliente;
+            
+            gimUsuario = getDaoUsuario().getUsuarioByID(session, BigDecimal.valueOf(planTrabajoBean.getLoginBean().getIdusuario()));
+            gimPersona = getDaoPersona().getPersonaByID(session, gimUsuario.getGimPersona().getPersId());
+            gimCliente = getDaoCliente().getClienteByIdPersona(session, gimPersona.getPersId());
+
+            if (gimCliente == null) {
+                return;
+            }
+
+            gimPlanCliente = getDaoPlanCliente().getPlanCliByIDClienteActivo(session, gimCliente.getCliId());
+            
+            
+            if(gimPlanCliente==null){
+                planTrabajoBean.setMensaje("Usted no tiene ningún plan de trabajo Asignado");
+                planTrabajoBean.setCodeMensaje(2);
+                return;
+            }
+            planTrabajoBean.setId(gimPlanCliente.getId().getPlanId());
+            mostrarPlanTrabajo(planTrabajoBean);
+
+        } catch (Exception e) {
+        }
+
+    }
+
     /**
      * @return the daoPlanTrabajo
      */
@@ -502,6 +551,46 @@ public class PlanTrabajoImplBO implements PlanTrabajoBO {
         this.daoParametros = daoParametros;
     }
 
-    
+    /**
+     * @return the daoPersona
+     */
+    public ITPersona getDaoPersona() {
+        return daoPersona;
+    }
+
+    /**
+     * @param daoPersona the daoPersona to set
+     */
+    public void setDaoPersona(ITPersona daoPersona) {
+        this.daoPersona = daoPersona;
+    }
+
+    /**
+     * @return the daoCliente
+     */
+    public ITCliente getDaoCliente() {
+        return daoCliente;
+    }
+
+    /**
+     * @param daoCliente the daoCliente to set
+     */
+    public void setDaoCliente(ITCliente daoCliente) {
+        this.daoCliente = daoCliente;
+    }
+
+    /**
+     * @return the daoPlanCliente
+     */
+    public ITPlanCliente getDaoPlanCliente() {
+        return daoPlanCliente;
+    }
+
+    /**
+     * @param daoPlanCliente the daoPlanCliente to set
+     */
+    public void setDaoPlanCliente(ITPlanCliente daoPlanCliente) {
+        this.daoPlanCliente = daoPlanCliente;
+    }
 
 }

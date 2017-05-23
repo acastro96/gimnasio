@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/05/2017 12:10:36 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimPlanCliente" table="GIM_PLAN_CLIENTE" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA QUE RELACIONA LOS CLIENTES Y LOS PLANES DE TRABAJO QUE SE LE ASIGNAN AL CLIENTE</comment>
+        <composite-id name="id" class="Pojo.GimPlanClienteId">
+            <key-property name="planId" type="big_decimal">
+                <column name="PLAN_ID" precision="22" scale="0" />
+            </key-property>
+            <key-property name="cliId" type="big_decimal">
+                <column name="CLI_ID" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="gimCliente" class="Pojo.GimCliente" update="false" insert="false" fetch="select">
+            <column name="CLI_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL CLIENTE AL QUE SE LE ESTA ASIGNANDO EL PLAN</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="gimPlanTrabajo" class="Pojo.GimPlanTrabajo" update="false" insert="false" fetch="select">
+            <column name="PLAN_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL PLAN QUE SE LE VA A ASIGNAR AL CLIENTE</comment>
+            </column>
+        </many-to-one>
+        <property name="plclEstado" type="big_decimal">
+            <column name="PLCL_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL PLAN ASIGNADO AL CLIENTE</comment>
+            </column>
+        </property>
+        <property name="plclFechaInicial" type="date">
+            <column name="PLCL_FECHA_INICIAL" length="7" not-null="true">
+                <comment>FECHA EN LA QUE EL CLIENTE INICIO EL PLAN DE TRABAJO</comment>
+            </column>
+        </property>
+        <property name="plclFechaFinal" type="date">
+            <column name="PLCL_FECHA_FINAL" length="7">
+                <comment>FECHA EN LA QUE EL CLIENTE FINALIZA EL PLAN DE TRABAJO</comment>
+            </column>
+        </property>
+        <property name="plclFechaProceso" type="date">
+            <column name="PLCL_FECHA_PROCESO" length="7">
+                <comment>FECHA EN LA QUE SE HIZO EL REGISTRO</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

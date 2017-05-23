@@ -123,12 +123,12 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="inicio.xhtml"><img src="#{request.contextPath}/resources/img/icons/logo.JPG" width="40%"  data-active-url="#{request.contextPath}/resources/img/icons/logo.JPG" alt=""></img></a>
+                            <h:link class="navbar-brand" outcome="/contenido/inicio"><img src="#{request.contextPath}/resources/img/icons/logo.JPG" width="40%"  data-active-url="#{request.contextPath}/resources/img/icons/logo.JPG" alt=""></img></h:link>
                         </div>
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right main-nav">
-                                <li><a href="#">Inicio</a></li>
+                                <li><h:link value="Inicio" outcome="/contenido/inicio"></h:link></li>
                                 <ui:repeat value="#{loginBean.listModulos}" var="modu">
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -150,7 +150,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <h:form>
-                                            <li><a href="../index.xhtml" >Cerrar Sesión</a></li>
+                                            <li><h:link outcome="/index" value="Cerrar Sesión" class="btn btn-cerrar" /></li>
                                         </h:form>
                                     </ul>
                                 </li>

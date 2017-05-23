@@ -13,303 +13,371 @@
         <ui:composition template="./../WEB-INF/templateInicio.xhtml">
             <ui:define name="content">
                 <div style="margin-top: 120px"></div>
-                <!--<c:forEach items="${loginBean.listRecursos}" var="rec">
+                <c:set var="val" value="false"/>
+                <c:forEach items="#{loginBean.listRecursos}" var="rec">
                     <c:if  test="#{rec eq 'clienteConsultar'}" var="bool">
                         <c:set var="val" value="true"/>
                     </c:if>
                 </c:forEach>
-                <c:if  test="#{val eq true}">-->
-                <h:form id="formClienteConsulta">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p:messages id="mensaje" showDetail="true"  autoUpdate="true" closable="true" />
+                <c:if  test="#{val eq true}">
+                    <h:form id="formClienteConsulta">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p:messages id="mensaje" showDetail="true"  autoUpdate="true" closable="true" />
+                                </div>
                             </div>
-                        </div>
-                        <h:panelGrid id="consulta" class="col-lg-12">
-                            <h:panelGroup rendered="#{!clientesBean.detalle}">
-                                <div class="nav-tabs-custom">
-                                    <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#tab_1" data-toggle="tab">Codigo</a></li>
-                                        <li><a href="#tab_2" data-toggle="tab">Documento</a></li>
-                                        <li><a href="#tab_3" data-toggle="tab">Nombre</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="tab_1">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div style="margin-top: 20px"></div>
-                                                    <div class="col-lg-3">
-                                                        <label for="txtCodigo" class="white">Codigo</label>
-                                                        <h:inputText id="txtCodigo" a:placeholder="Digite Código" onkeyup="valida_caracteres(this, 'special')" value="#{clientesBean.codigo}" class="form-control form-white text-uppercase" maxlength="30">
-                                                        </h:inputText>
-                                                    </div>
-                                                    <div class="col-lg-2">
-                                                        <label style="color: transparent">.</label>
-                                                        <p:commandLink  id="btnConsultaPorCodigo" action="#{clientesBean.consultarCliente(1)}" update="tbCliente" class="btn btn-blue form-control">
-                                                            <i class="fa fa-search"></i>
-                                                            <label>Consultar</label>
-                                                        </p:commandLink>
-                                                    </div>
-                                                </div><!--group-->
-                                            </div><!--row-->
-                                        </div><!-- /.tab-pane -->
-                                        <div class="tab-pane" id="tab_2">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div style="margin-top: 20px"></div>
-                                                    <div class="col-lg-3">
-                                                        <label for="txtDocumento" class="white">Documento</label>
-                                                        <h:inputText id="txtDocumento" a:placeholder="Digite Documento" onkeyup="valida_caracteres(this, 'special')" value="#{clientesBean.numeroDocumento}" class="form-control form-white text-uppercase" maxlength="30">
-                                                        </h:inputText>
-                                                    </div>
-                                                    <div class="col-lg-2">
-                                                        <label style="color: transparent">.</label>
-                                                        <p:commandLink  id="btnConsultaPorDocumento" action="#{clientesBean.consultarCliente(2)}" update="tbCliente" class="btn btn-blue form-control">
-                                                            <i class="fa fa-search"></i>
-                                                            <label>Consultar</label>
-                                                        </p:commandLink>
-                                                    </div>
-                                                </div><!--group-->
-                                            </div><!--row-->
-                                        </div><!-- /.tab-pane -->
-                                        <div class="tab-pane" id="tab_3">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div style="margin-top: 20px"></div>
-                                                    <div class="col-lg-3">
-                                                        <label for="txtNombre" class="white">Nombre</label>
-                                                        <h:inputText id="txtNombre" a:placeholder="Digite Nombre" onkeyup="valida_caracteres(this, 'special')" value="#{clientesBean.nombre1}" class="form-control form-white" maxlength="30">
-                                                        </h:inputText>
-                                                    </div>
-                                                    <div class="col-lg-2">
-                                                        <label style="color: transparent">.</label>
-                                                        <p:commandLink  id="btnConsultaPorNombre" action="#{planTrabajoBean.consultarPlanTrabajo(3)}" update="tbCliente" class="btn btn-blue form-control">
-                                                            <i class="fa fa-search"></i>
-                                                            <label>Consultar</label>
-                                                        </p:commandLink>
-                                                    </div>
-                                                </div><!--group-->
-                                            </div><!--row-->
-                                        </div><!-- /.tab-pane -->
-                                    </div><!-- /.tab-content -->
-                                </div><!-- nav-tabs-custom -->
-
-                                <div class="box box-primary" style="margin-top: 50px">
-                                    <div class="box-header with-border">
-                                        <h4 class="box-title white"><i class="fa fa-th"></i> Listado de Clientes</h4>
-                                    </div><!-- /.box-header -->
-                                    <div class="box-body">
-
-                                        <h:dataTable id="tbCliente"  value="#{clientesBean.listClientes}" var="listCliente" styleClass="table table-bordered">
-                                            <h:column>
-                                                <f:facet class="white" name="header"><h:outputText value="#" class="white" /></f:facet>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet class="white" name="header"><h:outputText class="white" value="Nombre"></h:outputText></f:facet>
-                                                <h:outputText class="white" value="#{listCliente.gimPersona.persNombre1}"></h:outputText>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet class="white" name="header"><h:outputText class="white" value="Apellido"></h:outputText></f:facet>
-                                                <h:outputText class="white" value="#{listCliente.gimPersona.persApellido1}" />
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet class="white" name="header"><h:outputText class="white" value="Codigo"/></f:facet>
-                                                <h:outputText class="white" value=" #{listCliente.cliCodigo}" />
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet class="white" name="header"><h:outputText class="white" value="Tipo de Documento"/></f:facet>
-                                                <h:outputText class="white" value=" #{clientesBean.getTipoDocumento(listCliente.gimPersona.persTipodocumento.intValue())}" />
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet class="white" name="header"><h:outputText class="white" value="Detalle"/></f:facet>
-                                                <h:commandLink>
-                                                    <f:ajax event="click" listener="#{clientesBean.mostrarCliente(listCliente.cliId)}" execute="@form" render="formClienteConsulta:consulta formClienteConsulta:detalle"/>
-                                                    <i class="fa fa-search"/>
-                                                </h:commandLink>
-                                            </h:column>
-                                        </h:dataTable>
-                                    </div><!-- /.box-body -->
-                                    <div class="box-footer clearfix">
-                                        <ul class="pagination pagination-sm no-margin pull-right">
-                                            <li><a href="#">&laquo;</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">&raquo;</a></li>
+                            <h:panelGrid id="consulta" class="col-lg-12">
+                                <h:panelGroup rendered="#{clientesBean.encabezado}">
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab_1" data-toggle="tab">Codigo</a></li>
+                                            <li><a href="#tab_2" data-toggle="tab">Documento</a></li>
+                                            <li><a href="#tab_3" data-toggle="tab">Nombre</a></li>
                                         </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab_1">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div style="margin-top: 20px"></div>
+                                                        <div class="col-lg-3">
+                                                            <label for="txtCodigo" class="white">Codigo</label>
+                                                            <h:inputText id="txtCodigo" a:placeholder="Digite Código" onkeyup="valida_caracteres(this, 'special')" value="#{clientesBean.codigo}" class="form-control form-white text-uppercase" maxlength="30">
+                                                            </h:inputText>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <label style="color: transparent">.</label>
+                                                            <p:commandLink  id="btnConsultaPorCodigo" action="#{clientesBean.consultarCliente(1)}" update="tbCliente" class="btn btn-blue form-control">
+                                                                <i class="fa fa-search"></i>
+                                                                <label>Consultar</label>
+                                                            </p:commandLink>
+                                                        </div>
+                                                    </div><!--group-->
+                                                </div><!--row-->
+                                            </div><!-- /.tab-pane -->
+                                            <div class="tab-pane" id="tab_2">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div style="margin-top: 20px"></div>
+                                                        <div class="col-lg-3">
+                                                            <label for="txtDocumento" class="white">Documento</label>
+                                                            <h:inputText id="txtDocumento" a:placeholder="Digite Documento" onkeyup="valida_caracteres(this, 'special')" value="#{clientesBean.numeroDocumento}" class="form-control form-white text-uppercase" maxlength="30">
+                                                            </h:inputText>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <label style="color: transparent">.</label>
+                                                            <p:commandLink  id="btnConsultaPorDocumento" action="#{clientesBean.consultarCliente(2)}" update="tbCliente" class="btn btn-blue form-control">
+                                                                <i class="fa fa-search"></i>
+                                                                <label>Consultar</label>
+                                                            </p:commandLink>
+                                                        </div>
+                                                    </div><!--group-->
+                                                </div><!--row-->
+                                            </div><!-- /.tab-pane -->
+                                            <div class="tab-pane" id="tab_3">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div style="margin-top: 20px"></div>
+                                                        <div class="col-lg-3">
+                                                            <label for="txtNombre" class="white">Nombre</label>
+                                                            <h:inputText id="txtNombre" a:placeholder="Digite Nombre" onkeyup="valida_caracteres(this, 'special')" value="#{clientesBean.nombre1}" class="form-control form-white" maxlength="30">
+                                                            </h:inputText>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <label style="color: transparent">.</label>
+                                                            <p:commandLink  id="btnConsultaPorNombre" action="#{planTrabajoBean.consultarPlanTrabajo(3)}" update="tbCliente" class="btn btn-blue form-control">
+                                                                <i class="fa fa-search"></i>
+                                                                <label>Consultar</label>
+                                                            </p:commandLink>
+                                                        </div>
+                                                    </div><!--group-->
+                                                </div><!--row-->
+                                            </div><!-- /.tab-pane -->
+                                        </div><!-- /.tab-content -->
+                                    </div><!-- nav-tabs-custom -->
+
+                                    <div class="box box-primary" style="margin-top: 50px">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title white"><i class="fa fa-th"></i> Listado de Clientes</h4>
+                                        </div><!-- /.box-header -->
+                                        <div class="box-body">
+
+                                            <h:dataTable id="tbCliente"  value="#{clientesBean.listClientes}" var="listCliente" styleClass="table table-bordered">
+                                                <h:column>
+                                                    <f:facet class="white" name="header"><h:outputText value="#" class="white" /></f:facet>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet class="white" name="header"><h:outputText class="white" value="Nombre"></h:outputText></f:facet>
+                                                    <h:outputText class="white" value="#{listCliente.gimPersona.persNombre1}"></h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet class="white" name="header"><h:outputText class="white" value="Apellido"></h:outputText></f:facet>
+                                                    <h:outputText class="white" value="#{listCliente.gimPersona.persApellido1}" />
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet class="white" name="header"><h:outputText class="white" value="Codigo"/></f:facet>
+                                                    <h:outputText class="white" value=" #{listCliente.cliCodigo}" />
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet class="white" name="header"><h:outputText class="white" value="Tipo de Documento"/></f:facet>
+                                                    <h:outputText class="white" value=" #{clientesBean.getTipoDocumento(listCliente.gimPersona.persTipodocumento.intValue())}" />
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet class="white" name="header"><h:outputText class="white" value="Detalle"/></f:facet>
+                                                    <h:commandLink>
+                                                        <f:ajax event="click" listener="#{clientesBean.mostrarCliente(listCliente.cliId)}" execute="@form" render="formClienteConsulta:consulta formClienteConsulta:detalle"/>
+                                                        <i class="fa fa-search"/>
+                                                    </h:commandLink>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet class="white" name="header"><h:outputText class="white" value="Asignar Plan"/></f:facet>
+                                                    <h:commandLink >
+                                                        <f:ajax event="click" render="formClienteConsulta:planAsignar formClienteConsulta:consulta" listener="#{clientesBean.mostrarAsignarPlan(listCliente.cliId)}"/>
+                                                            <i class="fa fa-edit"/>
+                                                    </h:commandLink>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </div><!-- /.box-body -->
+                                        <div class="box-footer clearfix">
+                                            <ul class="pagination pagination-sm no-margin pull-right">
+                                                <li><a href="#">&laquo;</a></li>
+                                                <li><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">&raquo;</a></li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- /.box -->
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            <h:panelGrid id="detalle" class="col-lg-12">
+                                <h:panelGroup rendered="#{clientesBean.detalle}">
+                                    <div id="accordion">
+                                        <!--Esta es la información que se va insertar en la tabla Persona-->
+                                        <h3 class="white">Informacion Basica</h3>
+                                        <div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="nombre1" class="white">Primer Nombre</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.nombre1}" id="nombre1" readonly="true" maxlength="50"/>
+                                                    <small id="nombre1" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="nombre2" class="white">Segundo Nombre</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.nombre2}" id="nombre2" readonly="true" maxlength="50"/>
+                                                    <small id="nombre2" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="apellido1" class="white">Primer Apellido</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.apellido1}" id="apellido1" readonly="true" maxlength="50"/>
+                                                    <small id="apellido1" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="apellido2" class="white">Segundo Apellido</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.apellido2}" id="apellido2" readonly="true" maxlength="50"/>
+                                                    <small id="apellido2" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="tipodoc" class="white">Tipo de Documento</label>
+                                                    <h:selectOneMenu class="form-control form-white" id="tipodoc" value="#{clientesBean.tipoDocumento}" readonly="true">
+                                                        <f:selectItems value="#{clientesBean.parTipoDocumento.entrySet()}" var="listTp" itemLabel="#{listTp.value}" itemValue="#{listTp.key}" />
+                                                    </h:selectOneMenu>
+                                                    <small id="tipodoc" class="form-text text-muted"></small>                                        
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="numdoc" class="white">Numero de Documento</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.numeroDocumento}" id="numdoc" readonly="true" maxlength="20"/>
+                                                    <small id="numdoc" class="form-text text-muted">Obligatorio</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="fechanac" class="white">Fecha Nacimiento</label>
+                                                    <p:watermark for="fechanac" value="DD/MM/YYYY"/>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.fechaNacimiento}" id="fechanac" readonly="true">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+                                                    </h:inputText>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="lugarnac" class="white">Lugar de Nacimiento</label>
+                                                    <h:selectOneMenu class="form-control form-white" id="lugarnac" readonly="true" value="#{clientesBean.lugarNacimiento}">
+                                                        <f:selectItems value="#{clientesBean.parLugarNacimiento.entrySet()}" var="listLn" itemLabel="#{listLn.value}" itemValue="#{listLn.key}" />
+                                                    </h:selectOneMenu>
+                                                    <small id="lugarnac" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="gruposang" class="white">Grupo Sanguineo</label>
+                                                    <h:selectOneMenu class="form-control form-white" id="gruposang" readonly="true" value="#{clientesBean.grupoSanguineo}">
+                                                        <f:selectItem itemLabel="A" itemValue="1"/>
+                                                        <f:selectItem itemLabel="B" itemValue="2"/>
+                                                        <f:selectItem itemLabel="AB" itemValue="3"/>
+                                                        <f:selectItem itemLabel="O" itemValue="4"/>
+                                                    </h:selectOneMenu>
+                                                    <small id="gruposang" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="rh" class="white">RH</label>
+                                                    <h:selectOneMenu class="form-control form-white" id="rh" readonly="true" value="#{clientesBean.rh}">
+                                                        <f:selectItem itemLabel="Positivo" itemValue="Positivo"/>
+                                                        <f:selectItem itemLabel="Negativo" itemValue="Negativo"/>
+                                                    </h:selectOneMenu>
+                                                    <small id="rh" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="sexo" class="white">Sexo</label>
+                                                    <h:selectOneMenu class="form-control form-white" id="sexo" readonly="true" value="#{clientesBean.sexo}">
+                                                        <f:selectItem itemLabel="Masculino" itemValue="1"/>
+                                                        <f:selectItem itemLabel="Femenino" itemValue="2"/>
+                                                    </h:selectOneMenu>
+                                                    <small id="sexo" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="telefono" class="white">Telefono</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.telefono}" readonly="true" id="telefono"/>
+                                                    <small id="telefono" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="email" class="white">Email</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.email}" readonly="true" id="email" maxlength="60"/>
+                                                    <small id="email" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="direccion" class="white">Direccion</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.direccion}" readonly="true" id="direccion"/>
+                                                    <small id="direccion" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="celular" class="white">Celular</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.celular}" readonly="true" id="celular"/>
+                                                    <small id="celular" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Esta es la información que se va insertar en la tabla Instructores-->
+                                        <h3 class="white" >Informacion Especifica</h3>
+                                        <div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="codigo" class="white">Codigo</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.codigo}" readonly="true" id="codigo"/>
+                                                    <small id="codigo" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="preferencia" class="white">Preferencia</label>
+                                                    <h:inputText class="form-control form-white" value="#{clientesBean.getTipoPreferencia(clientesBean.tipoPlanPreferencia)}" readonly="true" id="preferencia"/>
+                                                    <small id="preferencia" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="descripcion" class="white">Descripción de lo que espera del servicio</label>
+                                                    <h:inputTextarea rows="5" class="form-control form-white" value="#{clientesBean.descripcion}" readonly="true" id="descripcion"/>
+                                                    <small id="descripcion" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Esta es la información que se va insertar en la tabla Usuario-->
+                                        <h3 class="white">Informacion de Usuario</h3>
+                                        <div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="usunom" class="white">Nombre de Usuario</label>
+                                                    <h:inputText class="form-control form-white" value="#{instructoresBean.usuNom}" readonly="true" id="usunom"/>
+                                                    <small id="usunom" class="form-text text-muted"></small>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div><!-- /.box -->
-                            </h:panelGroup>
-                        </h:panelGrid>
-                        <h:panelGrid id="detalle" class="col-lg-12">
-                            <h:panelGroup rendered="#{clientesBean.detalle}">
-                                <div id="accordion">
-                                    <!--Esta es la información que se va insertar en la tabla Persona-->
-                                    <h3 class="white">Informacion Basica</h3>
-                                    <div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="nombre1" class="white">Primer Nombre</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.nombre1}" id="nombre1" readonly="true" maxlength="50"/>
-                                                <small id="nombre1" class="form-text text-muted"></small>
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="nombre2" class="white">Segundo Nombre</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.nombre2}" id="nombre2" readonly="true" maxlength="50"/>
-                                                <small id="nombre2" class="form-text text-muted"></small>
-                                            </div>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            <h:panelGrid id="planAsignar" class="col-lg-12">
+                                <h:panelGroup rendered="#{clientesBean.planAsignar}">
+                                    <h3 class="white">Asignar Plan de Trabajo</h3>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" value="#{clientesBean.nombre1}" id="nomPlan1" readonly="true" maxlength="50"/>
+                                            <small id="nomPlan" class="form-text text-muted white">Nombre</small>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="apellido1" class="white">Primer Apellido</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.apellido1}" id="apellido1" readonly="true" maxlength="50"/>
-                                                <small id="apellido1" class="form-text text-muted"></small>
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="apellido2" class="white">Segundo Apellido</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.apellido2}" id="apellido2" readonly="true" maxlength="50"/>
-                                                <small id="apellido2" class="form-text text-muted"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="tipodoc" class="white">Tipo de Documento</label>
-                                                <h:selectOneMenu class="form-control form-white" id="tipodoc" value="#{clientesBean.tipoDocumento}" readonly="true">
-                                                    <f:selectItems value="#{clientesBean.parTipoDocumento.entrySet()}" var="listTp" itemLabel="#{listTp.value}" itemValue="#{listTp.key}" />
-                                                </h:selectOneMenu>
-                                                <small id="tipodoc" class="form-text text-muted"></small>                                        
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="numdoc" class="white">Numero de Documento</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.numeroDocumento}" id="numdoc" readonly="true" maxlength="20"/>
-                                                <small id="numdoc" class="form-text text-muted">Obligatorio</small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="fechanac" class="white">Fecha Nacimiento</label>
-                                                <p:watermark for="fechanac" value="DD/MM/YYYY"/>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.fechaNacimiento}" id="fechanac" readonly="true">
-                                                    <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
-                                                </h:inputText>
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="lugarnac" class="white">Lugar de Nacimiento</label>
-                                                <h:selectOneMenu class="form-control form-white" id="lugarnac" readonly="true" value="#{clientesBean.lugarNacimiento}">
-                                                    <f:selectItems value="#{clientesBean.parLugarNacimiento.entrySet()}" var="listLn" itemLabel="#{listLn.value}" itemValue="#{listLn.key}" />
-                                                </h:selectOneMenu>
-                                                <small id="lugarnac" class="form-text text-muted"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="gruposang" class="white">Grupo Sanguineo</label>
-                                                <h:selectOneMenu class="form-control form-white" id="gruposang" readonly="true" value="#{clientesBean.grupoSanguineo}">
-                                                    <f:selectItem itemLabel="A" itemValue="1"/>
-                                                    <f:selectItem itemLabel="B" itemValue="2"/>
-                                                    <f:selectItem itemLabel="AB" itemValue="3"/>
-                                                    <f:selectItem itemLabel="O" itemValue="4"/>
-                                                </h:selectOneMenu>
-                                                <small id="gruposang" class="form-text text-muted"></small>
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="rh" class="white">RH</label>
-                                                <h:selectOneMenu class="form-control form-white" id="rh" readonly="true" value="#{clientesBean.rh}">
-                                                    <f:selectItem itemLabel="Positivo" itemValue="Positivo"/>
-                                                    <f:selectItem itemLabel="Negativo" itemValue="Negativo"/>
-                                                </h:selectOneMenu>
-                                                <small id="rh" class="form-text text-muted"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="sexo" class="white">Sexo</label>
-                                                <h:selectOneMenu class="form-control form-white" id="sexo" readonly="true" value="#{clientesBean.sexo}">
-                                                    <f:selectItem itemLabel="Masculino" itemValue="1"/>
-                                                    <f:selectItem itemLabel="Femenino" itemValue="2"/>
-                                                </h:selectOneMenu>
-                                                <small id="sexo" class="form-text text-muted"></small>
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="telefono" class="white">Telefono</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.telefono}" readonly="true" id="telefono"/>
-                                                <small id="telefono" class="form-text text-muted"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="email" class="white">Email</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.email}" readonly="true" id="email" maxlength="60"/>
-                                                <small id="email" class="form-text text-muted"></small>
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="direccion" class="white">Direccion</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.direccion}" readonly="true" id="direccion"/>
-                                                <small id="direccion" class="form-text text-muted"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="celular" class="white">Celular</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.celular}" readonly="true" id="celular"/>
-                                                <small id="celular" class="form-text text-muted"></small>
-                                            </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" value="#{clientesBean.apellido1}" id="apePlan1" readonly="true" maxlength="50"/>
+                                            <small id="apePlan" class="form-text text-muted white">Apellido</small>
                                         </div>
                                     </div>
-                                    <!--Esta es la información que se va insertar en la tabla Instructores-->
-                                    <h3 class="white" >Informacion Especifica</h3>
-                                    <div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="codigo" class="white">Codigo</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.codigo}" readonly="true" id="codigo"/>
-                                                <small id="codigo" class="form-text text-muted"></small>
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label for="preferencia" class="white">Preferencia</label>
-                                                <h:inputText class="form-control form-white" value="#{clientesBean.getTipoPreferencia(clientesBean.tipoPlanPreferencia)}" readonly="true" id="preferencia"/>
-                                                <small id="preferencia" class="form-text text-muted"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="descripcion" class="white">Descripción de lo que espera del servicio</label>
-                                                <h:inputTextarea rows="5" class="form-control form-white" value="#{clientesBean.descripcion}" readonly="true" id="descripcion"/>
-                                                <small id="descripcion" class="form-text text-muted"></small>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h:selectOneMenu class="form-control form-white" id="plan" value="#{clientesBean.idPlan}">
+                                                <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                                                <f:selectItems value="#{clientesBean.planesAsignar.entrySet()}" var="listPlan" itemLabel="#{listPlan.value}" itemValue="#{listPlan.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="plantra" class="form-text text-muted white">Planes de Trabajo</small>
                                         </div>
                                     </div>
-                                    <!--Esta es la información que se va insertar en la tabla Usuario-->
-                                    <h3 class="white">Informacion de Usuario</h3>
-                                    <div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="usunom" class="white">Nombre de Usuario</label>
-                                                <h:inputText class="form-control form-white" value="#{instructoresBean.usuNom}" readonly="true" id="usunom"/>
-                                                <small id="usunom" class="form-text text-muted"></small>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 text-center">
+                                            <h:commandLink class="btn btn-submit" > Asignar
+                                                <f:ajax event="click" listener="#{clientesBean.asignarPlan()}" execute="@form" />
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </div>
+
+                        <!--<div class="modal fade" id="modalPlan" tabindex="-1" role="dialog" aria-labelledby="modalPlan" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content modal-popup">
+                                    <button href="#" class="close" data-dismiss="modal"><i class="icon_close_alt2"></i></button>
+                                    <h3 class="white">Asignar Plan de Trabajo</h3>
+                                    <div class="row">
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-8">
+                                            <label for="lugarnac" class="white">Planes de Trabajo</label>
+                                            <h:selectOneMenu class="form-control form-white" id="plan" value="#{clientesBean.idPlan}">
+                                                <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                                                <f:selectItems value="#{clientesBean.planesAsignar.entrySet()}" var="listPlan" itemLabel="#{listPlan.value}" itemValue="#{listPlan.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="lugarnac" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="col-lg-2"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 text-center">
+                                            <h:commandLink class="btn btn-submit" > Asignar
+                                                <f:ajax event="click" listener="#{clientesBean.asignarPlan()}" execute="@form" />
+                                            </h:commandLink>
                                         </div>
                                     </div>
                                 </div>
-                            </h:panelGroup>
-                        </h:panelGrid>
-                    </div>
-                </h:form>
-                <!--</c:if>
+                            </div>
+                        </div>-->
+
+                    </h:form>
+                </c:if>
                 <c:if  test="#{val eq false}">
                     <script>
-                        document.location.href = 'index2.html';
+                        document.location.href = '../404.html';
                     </script>
-                </c:if>-->
+                </c:if>
             </ui:define>
 
         </ui:composition>

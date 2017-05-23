@@ -32,7 +32,9 @@ public class DaoInstructor implements ITInstructor{
 
     @Override
     public List<GimInstructor> getAll(Session session) throws Exception {
-        return session.createCriteria(GimInstructor.class).list();
+        return session.createCriteria(GimInstructor.class)
+                .add(Restrictions.eq("instEstado", BigDecimal.ONE))
+                .list();
     }
 
     @Override

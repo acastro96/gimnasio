@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -13,172 +14,185 @@
 
             <ui:define name="content">
                 <div style="margin-top: 120px"></div>
-                <h:form id="formConsultaRutina">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p:messages id="mensaje" showDetail="true"  autoUpdate="true" closable="true" />
+                <c:set var="val" value="false"/>
+                <c:forEach items="#{loginBean.listRecursos}" var="rec">
+                    <c:if  test="#{rec eq 'rutinaConsultar'}" var="bool">
+                        <c:set var="val" value="true"/>
+                    </c:if>
+                </c:forEach>
+                <c:if  test="#{val eq true}">
+                    <h:form id="formConsultaRutina">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p:messages id="mensaje" showDetail="true"  autoUpdate="true" closable="true" />
+                                </div>
                             </div>
-                        </div>
 
-                        <h:panelGrid id="consulta" class="col-lg-12">
-                            <h:panelGroup rendered="#{!rutinasBean.detalle}">
-                                <div class="nav-tabs-custom">
-                                    <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#tab_1" data-toggle="tab">Codigo</a></li>
-                                        <li><a href="#tab_2" data-toggle="tab">Nombre</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="tab_1">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div style="margin-top: 20px"></div>
-                                                    <div class="col-lg-3">
-                                                        <label for="txtCodigo" class="white">Codigo</label>
-                                                        <h:inputText id="txtCodigo" a:placeholder="Digite Código" onkeyup="valida_caracteres(this, 'special')" value="#{rutinasBean.codigo}" class="form-control text-uppercase form-white" maxlength="30">
-                                                        </h:inputText>
-                                                    </div>
-                                                    <div class="col-lg-2">
-                                                        <label style="color: transparent">.</label>
-                                                        <p:commandLink  id="btnConsultaPorCodigo" action="#{rutinasBean.consultarRutina(1)}" update="tbRutina" class="btn btn-blue form-control">
-                                                            <i class="fa fa-search"></i>
-                                                            <label>Consultar</label>
-                                                        </p:commandLink>
-                                                    </div>
-                                                </div><!--group-->
-                                            </div><!--row-->
-                                        </div><!-- /.tab-pane -->
-                                        <div class="tab-pane" id="tab_2">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div style="margin-top: 20px"></div>
-                                                    <div class="col-lg-3">
-                                                        <label for="txtNombre" class="white">Nombre</label>
-                                                        <h:inputText id="txtNombre" a:placeholder="Digite Nombre" onkeyup="valida_caracteres(this, 'special')" value="#{rutinasBean.nombre}" class="form-control text-uppercase form-white" maxlength="30">
-                                                        </h:inputText>
-                                                    </div>
-                                                    <div class="col-lg-2">
-                                                        <label style="color: transparent">.</label>
-                                                        <p:commandLink  id="btnConsultaPorNombre" action="#{rutinasBean.consultarRutina(2)}" update="tbRutina" class="btn btn-blue form-control">
-                                                            <i class="fa fa-search"></i>
-                                                            <label>Consultar</label>
-                                                        </p:commandLink>
-                                                    </div>
-                                                </div><!--group-->
-                                            </div><!--row-->
-                                        </div><!-- /.tab-pane -->
-                                    </div><!-- /.tab-content -->
-                                </div><!-- nav-tabs-custom -->
-
-                                <div class="box box-primary" style="margin-top: 50px">
-                                    <div class="box-header with-border">
-                                        <h4 class="box-title white"><i class="fa fa-th"></i> Listado de Rutinas</h4>
-                                    </div><!-- /.box-header -->
-                                    <div class="box-body">
-
-                                        <h:dataTable id="tbRutina"  value="#{rutinasBean.listRutinas}" var="listRutina" styleClass="table table-bordered">
-                                            <h:column>
-                                                <f:facet name="header"><h:outputText value="#" class="white" /></f:facet>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header"><h:outputText class="white" value="Nombre"></h:outputText></f:facet>
-                                                <h:outputText class="white" value="#{listRutina.rutNombre}"></h:outputText>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header"><h:outputText class="white" value="Código"></h:outputText></f:facet>
-                                                <h:outputText class="white" value="#{listRutina.rutCodigo}" />
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header"><h:outputText class="white" value="Codigo"/></f:facet>
-                                                <h:outputText class="white" value=" #{listRutina.rutCalorias.intValue()}" />
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header"><h:outputText class="white" value="Video"/></f:facet>
-                                                <h:commandLink>
-                                                    <f:ajax event="click" listener="#{rutinasBean.mostrarVideolista(listRutina.rutNombre)}"/>
-                                                    <i class="fa fa-video-camera"/>
-                                                </h:commandLink>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header"><h:outputText class="white" value="Detalle"/></f:facet>
-                                                <h:commandLink>
-                                                    <f:ajax event="click" listener="#{rutinasBean.mostrarRutina(listRutina.rutId)}" execute="@form" render="formConsultaRutina:consulta formConsultaRutina:detalle"/>
-                                                    <i class="fa fa-search"/>
-                                                </h:commandLink>
-                                            </h:column>
-                                        </h:dataTable>
-                                    </div><!-- /.box-body -->
-                                    <div class="box-footer clearfix">
-                                        <ul class="pagination pagination-sm no-margin pull-right">
-                                            <li><a href="#">&laquo;</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">&raquo;</a></li>
+                            <h:panelGrid id="consulta" class="col-lg-12">
+                                <h:panelGroup rendered="#{!rutinasBean.detalle}">
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab_1" data-toggle="tab">Codigo</a></li>
+                                            <li><a href="#tab_2" data-toggle="tab">Nombre</a></li>
                                         </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab_1">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div style="margin-top: 20px"></div>
+                                                        <div class="col-lg-3">
+                                                            <label for="txtCodigo" class="white">Codigo</label>
+                                                            <h:inputText id="txtCodigo" a:placeholder="Digite Código" onkeyup="valida_caracteres(this, 'special')" value="#{rutinasBean.codigo}" class="form-control text-uppercase form-white" maxlength="30">
+                                                            </h:inputText>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <label style="color: transparent">.</label>
+                                                            <p:commandLink  id="btnConsultaPorCodigo" action="#{rutinasBean.consultarRutina(1)}" update="tbRutina" class="btn btn-blue form-control">
+                                                                <i class="fa fa-search"></i>
+                                                                <label>Consultar</label>
+                                                            </p:commandLink>
+                                                        </div>
+                                                    </div><!--group-->
+                                                </div><!--row-->
+                                            </div><!-- /.tab-pane -->
+                                            <div class="tab-pane" id="tab_2">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div style="margin-top: 20px"></div>
+                                                        <div class="col-lg-3">
+                                                            <label for="txtNombre" class="white">Nombre</label>
+                                                            <h:inputText id="txtNombre" a:placeholder="Digite Nombre" onkeyup="valida_caracteres(this, 'special')" value="#{rutinasBean.nombre}" class="form-control text-uppercase form-white" maxlength="30">
+                                                            </h:inputText>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <label style="color: transparent">.</label>
+                                                            <p:commandLink  id="btnConsultaPorNombre" action="#{rutinasBean.consultarRutina(2)}" update="tbRutina" class="btn btn-blue form-control">
+                                                                <i class="fa fa-search"></i>
+                                                                <label>Consultar</label>
+                                                            </p:commandLink>
+                                                        </div>
+                                                    </div><!--group-->
+                                                </div><!--row-->
+                                            </div><!-- /.tab-pane -->
+                                        </div><!-- /.tab-content -->
+                                    </div><!-- nav-tabs-custom -->
+
+                                    <div class="box box-primary" style="margin-top: 50px">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title white"><i class="fa fa-th"></i> Listado de Rutinas</h4>
+                                        </div><!-- /.box-header -->
+                                        <div class="box-body">
+
+                                            <h:dataTable id="tbRutina"  value="#{rutinasBean.listRutinas}" var="listRutina" styleClass="table table-bordered">
+                                                <h:column>
+                                                    <f:facet name="header"><h:outputText value="#" class="white" /></f:facet>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header"><h:outputText class="white" value="Nombre"></h:outputText></f:facet>
+                                                    <h:outputText class="white" value="#{listRutina.rutNombre}"></h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header"><h:outputText class="white" value="Código"></h:outputText></f:facet>
+                                                    <h:outputText class="white" value="#{listRutina.rutCodigo}" />
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header"><h:outputText class="white" value="Codigo"/></f:facet>
+                                                    <h:outputText class="white" value=" #{listRutina.rutCalorias.intValue()}" />
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header"><h:outputText class="white" value="Video"/></f:facet>
+                                                    <h:commandLink>
+                                                        <f:ajax event="click" listener="#{rutinasBean.mostrarVideolista(listRutina.rutNombre)}"/>
+                                                        <i class="fa fa-video-camera"/>
+                                                    </h:commandLink>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header"><h:outputText class="white" value="Detalle"/></f:facet>
+                                                    <h:commandLink>
+                                                        <f:ajax event="click" listener="#{rutinasBean.mostrarRutina(listRutina.rutId)}" execute="@form" render="formConsultaRutina:consulta formConsultaRutina:detalle"/>
+                                                        <i class="fa fa-search"/>
+                                                    </h:commandLink>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </div><!-- /.box-body -->
+                                        <div class="box-footer clearfix">
+                                            <ul class="pagination pagination-sm no-margin pull-right">
+                                                <li><a href="#">&laquo;</a></li>
+                                                <li><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">&raquo;</a></li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- /.box -->
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            <h:panelGrid id="detalle" class="col-lg-12">
+                                <h:panelGroup rendered="#{rutinasBean.detalle}">
+                                    <div class="row">
+                                        <h3 class="page-header white">
+                                            <i class="fa fa-sliders white"></i> Rutina
+                                        </h3>
                                     </div>
-                                </div><!-- /.box -->
-                            </h:panelGroup>
-                        </h:panelGrid>
-                        <h:panelGrid id="detalle" class="col-lg-12">
-                            <h:panelGroup rendered="#{rutinasBean.detalle}">
-                                <div class="row">
-                                    <h3 class="page-header white">
-                                        <i class="fa fa-sliders white"></i> Rutina
-                                    </h3>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <label for="nombreRut" class="white">Nombre Rutina</label>
-                                        <h:inputText class="form-control form-white" value="#{rutinasBean.nombre}" id="nombreRut" maxlength="50" readonly="true"/>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="nombreRut" class="white">Nombre Rutina</label>
+                                            <h:inputText class="form-control form-white" value="#{rutinasBean.nombre}" id="nombreRut" maxlength="50" readonly="true"/>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="codigoRut" class="white">Codigo Rutina</label>
+                                            <h:inputText class="form-control form-white" value="#{rutinasBean.codigo}" id="codigoRut" maxlength="50" readonly="true"/>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-6">
-                                        <label for="codigoRut" class="white">Codigo Rutina</label>
-                                        <h:inputText class="form-control form-white" value="#{rutinasBean.codigo}" id="codigoRut" maxlength="50" readonly="true"/>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="repeticionesRut" class="white">Repeticiones en la Rutina</label>
+                                            <h:selectOneMenu class="form-control form-white" id="repeticionesRut" value="#{rutinasBean.repeticiones}" readonly="true">
+                                                <f:selectItem itemLabel="1" itemValue="1" />
+                                                <f:selectItem itemLabel="2" itemValue="2" />
+                                                <f:selectItem itemLabel="3" itemValue="3" />
+                                                <f:selectItem itemLabel="4" itemValue="4" />
+                                                <f:selectItem itemLabel="5" itemValue="5" />
+                                            </h:selectOneMenu>
+                                            <small id="repeticionesRut" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="caloriasRut" class="white">Calorias Rutina</label>
+                                            <h:selectOneMenu class="form-control form-white" id="caloriasRut" value="#{rutinasBean.calorias}" readonly="true">
+                                                <f:selectItem itemLabel="50" itemValue="50" />
+                                                <f:selectItem itemLabel="100" itemValue="100" />
+                                                <f:selectItem itemLabel="150" itemValue="150" />
+                                                <f:selectItem itemLabel="200" itemValue="200" />
+                                                <f:selectItem itemLabel="300" itemValue="300" />
+                                            </h:selectOneMenu>
+                                            <small id="caloriasRut" class="form-text text-muted white">Aprox.</small>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <label for="repeticionesRut" class="white">Repeticiones en la Rutina</label>
-                                        <h:selectOneMenu class="form-control form-white" id="repeticionesRut" value="#{rutinasBean.repeticiones}" readonly="true">
-                                            <f:selectItem itemLabel="1" itemValue="1" />
-                                            <f:selectItem itemLabel="2" itemValue="2" />
-                                            <f:selectItem itemLabel="3" itemValue="3" />
-                                            <f:selectItem itemLabel="4" itemValue="4" />
-                                            <f:selectItem itemLabel="5" itemValue="5" />
-                                        </h:selectOneMenu>
-                                        <small id="repeticionesRut" class="form-text text-muted"></small>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="descripcionRut" class="white">Descripcion Rutina</label>
+                                            <h:inputTextarea rows="5" class="form-control form-white" value="#{rutinasBean.descripcion}" id="descripcionRut" readonly="true"/>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-6">
-                                        <label for="caloriasRut" class="white">Calorias Rutina</label>
-                                        <h:selectOneMenu class="form-control form-white" id="caloriasRut" value="#{rutinasBean.calorias}" readonly="true">
-                                            <f:selectItem itemLabel="50" itemValue="50" />
-                                            <f:selectItem itemLabel="100" itemValue="100" />
-                                            <f:selectItem itemLabel="150" itemValue="150" />
-                                            <f:selectItem itemLabel="200" itemValue="200" />
-                                            <f:selectItem itemLabel="300" itemValue="300" />
-                                        </h:selectOneMenu>
-                                        <small id="caloriasRut" class="form-text text-muted white">Aprox.</small>
+                                    <div style="margin-top: 20px"></div>
+                                    <div class="row">
+                                        <div class="form-group text-center">
+                                            <h:commandLink action="#{rutinasBean.mostrarVideo()}" class="btn btn-blue">
+                                                <i class="fa fa-video-camera"/> Ver Video
+                                            </h:commandLink>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-lg-12">
-                                        <label for="descripcionRut" class="white">Descripcion Rutina</label>
-                                        <h:inputTextarea rows="5" class="form-control form-white" value="#{rutinasBean.descripcion}" id="descripcionRut" readonly="true"/>
-                                    </div>
-                                </div>
-                                <div style="margin-top: 20px"></div>
-                                <div class="row">
-                                    <div class="form-group text-center">
-                                        <h:commandLink action="#{rutinasBean.mostrarVideo()}" class="btn btn-blue">
-                                            <i class="fa fa-video-camera"/> Ver Video
-                                        </h:commandLink>
-                                    </div>
-                                </div>
-                            </h:panelGroup>
-                        </h:panelGrid>
-                    </div>
-                </h:form>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </div>
+                    </h:form>
+                </c:if>
+                <c:if  test="#{val eq false}">
+                    <script>
+                        document.location.href = '../404.html';
+                    </script>
+                </c:if>
             </ui:define>
 
         </ui:composition>

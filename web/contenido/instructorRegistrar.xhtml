@@ -13,198 +13,199 @@
         <ui:composition template="./../WEB-INF/templateInicio.xhtml">
             <ui:define name="content">
                 <div style="margin-top: 120px"></div>
-                <!--<c:forEach items="${loginBean.listRecursos}" var="rec">
+                <c:set var="val" value="false"/>
+                <c:forEach items="${loginBean.listRecursos}" var="rec">
                     <c:if  test="#{rec eq 'instructorRegistrar'}" var="bool">
                         <c:set var="val" value="true"/>
                     </c:if>
                 </c:forEach>
-                <c:if  test="#{val eq true}">-->
-                <h:form>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true"  />
-                            </div>
-                        </div>
-                        <div id="accordion">
-                            <!--Esta es la información que se va insertar en la tabla Persona-->
-                            <h3 class="white">Informacion Basica</h3>
-                            <div class="desplegar">
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Primer Nombre" value="#{instructoresBean.nombre1}" id="nombre1" maxlength="50"/>
-                                        <small id="nombre1" class="form-text text-muted"></small>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Segundo Nombre" value="#{instructoresBean.nombre2}" id="nombre2" maxlength="50"/>
-                                        <small id="nombre2" class="form-text text-muted"></small>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Primer Apellido" value="#{instructoresBean.apellido1}" id="apellido1" maxlength="50"/>
-                                        <small id="apellido1" class="form-text text-muted"></small>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Segundo Apellido" value="#{instructoresBean.apellido2}" id="apellido2" maxlength="50"/>
-                                        <small id="apellido2" class="form-text text-muted"></small>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white" id="tipodoc" value="#{instructoresBean.tipoDocumento}">
-                                            <f:selectItems value="#{instructoresBean.parTipoDocumento.entrySet()}" var="listTp" itemLabel="#{listTp.value}" itemValue="#{listTp.key}" />
-                                        </h:selectOneMenu>
-                                        <small id="tipodoc" class="form-text text-muted"></small>                                        
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Numero de Documento" value="#{instructoresBean.numeroDocumento}" id="numdoc" maxlength="20"/>
-                                        <small id="numdoc" class="form-text text-muted">Obligatorio</small>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="DD/MM/AAAA" value="#{instructoresBean.fechaNacimiento}" id="fechanac">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
-                                        </h:inputText>
-                                        <small id="fechanacsm" class="form-text text-muted white">Fecha Nacimiento</small>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white" id="lugarnac" value="#{instructoresBean.lugarNacimiento}">
-                                            <f:selectItems value="#{instructoresBean.parLugarNacimiento.entrySet()}" var="listLn" itemLabel="#{listLn.value}" itemValue="#{listLn.key}" />
-                                        </h:selectOneMenu>
-                                        <small id="lugarnac" class="form-text text-muted white">Lugar Nacimiento</small>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white" id="gruposang" value="#{instructoresBean.grupoSanguineo}">
-                                            <f:selectItems value="#{instructoresBean.parGrupoSanguineo.entrySet()}" var="listGs" itemLabel="#{listGs.value}" itemValue="#{listGs.key}" />
-                                        </h:selectOneMenu>
-                                        <small id="gruposang" class="form-text text-muted white">Grupo Sanguineo</small>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white" id="rh" value="#{instructoresBean.rh}">
-                                            <f:selectItem itemLabel="Positivo" itemValue="Positivo"/>
-                                            <f:selectItem itemLabel="Negativo" itemValue="Negativo"/>
-                                        </h:selectOneMenu>
-                                        <small id="rh" class="form-text text-muted white">RH</small>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white" id="sexo" value="#{instructoresBean.sexo}">
-                                            <f:selectItems value="#{instructoresBean.parSexo.entrySet()}" var="listSexo" itemLabel="#{listSexo.value}" itemValue="#{listSexo.key}" />
-                                        </h:selectOneMenu>
-                                        <small id="sexo" class="form-text text-muted white"></small>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Telefono" value="#{instructoresBean.telefono}" id="telefono"/>
-                                        <small id="telefono" class="form-text text-muted"></small>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="E-mail" value="#{instructoresBean.email}" id="email" maxlength="60"/>
-                                        <small id="email" class="form-text text-muted"></small>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Dirección" value="#{instructoresBean.direccion}" id="direccion"/>
-                                        <small id="direccion" class="form-text text-muted"></small>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Celular" value="#{instructoresBean.celular}" id="celular"/>
-                                        <small id="celular" class="form-text text-muted"></small>
-                                    </div>
+                <c:if  test="#{val eq true}">
+                    <h:form>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true"  />
                                 </div>
                             </div>
-                        </div>
-                        <div id="accordion">
-                            <!--Esta es la información que se va insertar en la tabla Instructores-->
-                            <h3>Informacion Especifica</h3>
-                            <div class="desplegar">
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="DD/MM/AAAA"  value="#{instructoresBean.fechaIngresoGim}" id="fechaing">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
-                                        </h:inputText>
-                                        <small id="fechaing" class="form-text text-muted white">Fecha Ingreso Gimnasio</small>
+                            <div id="accordion">
+                                <!--Esta es la información que se va insertar en la tabla Persona-->
+                                <h3 class="white">Informacion Basica</h3>
+                                <div class="desplegar">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Primer Nombre" value="#{instructoresBean.nombre1}" id="nombre1" maxlength="50"/>
+                                            <small id="nombre1" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Segundo Nombre" value="#{instructoresBean.nombre2}" id="nombre2" maxlength="50"/>
+                                            <small id="nombre2" class="form-text text-muted"></small>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Código Instructor"  value="#{instructoresBean.codigo}" id="codigo"/>
-                                        <small id="codigo" class="form-text text-muted white"></small>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white"  id="especialidad" value="#{instructoresBean.especialidad}">
-                                            <f:selectItems value="#{instructoresBean.parEspecialidad.entrySet()}" var="listEs" itemLabel="#{listEs.value}" itemValue="#{listEs.key}" />
-                                        </h:selectOneMenu>
-                                        <small id="especialidad" class="form-text text-muted white">Especialidad</small>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Primer Apellido" value="#{instructoresBean.apellido1}" id="apellido1" maxlength="50"/>
+                                            <small id="apellido1" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Segundo Apellido" value="#{instructoresBean.apellido2}" id="apellido2" maxlength="50"/>
+                                            <small id="apellido2" class="form-text text-muted"></small>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white" id="nivelEstudio" value="#{instructoresBean.nivelEstudio}">
-                                            <f:selectItems value="#{instructoresBean.parNivelEstudio.entrySet()}" var="listEst" itemLabel="#{listEst.value}" itemValue="#{listEst.key}" />
-                                        </h:selectOneMenu>
-                                        <small id="nivelEstudio" class="form-text text-muted white">Nivel de Estudio</small>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white" id="tipodoc" value="#{instructoresBean.tipoDocumento}">
+                                                <f:selectItems value="#{instructoresBean.parTipoDocumento.entrySet()}" var="listTp" itemLabel="#{listTp.value}" itemValue="#{listTp.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="tipodoc" class="form-text text-muted"></small>                                        
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Numero de Documento" value="#{instructoresBean.numeroDocumento}" id="numdoc" maxlength="20"/>
+                                            <small id="numdoc" class="form-text text-muted">Obligatorio</small>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:selectOneMenu class="form-control form-white" id="nivelNutricion" value="#{instructoresBean.nivelNutricion}">
-                                            <f:selectItems value="#{instructoresBean.parNivelNutricion.entrySet()}" var="listNut" itemLabel="#{listNut.value}" itemValue="#{listNut.key}" />
-                                        </h:selectOneMenu>
-                                        <small id="nivelNutricion" class="form-text text-muted white">Experiencia Nutricional</small>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="DD/MM/AAAA" value="#{instructoresBean.fechaNacimiento}" id="fechanac">
+                                                <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+                                            </h:inputText>
+                                            <small id="fechanacsm" class="form-text text-muted white">Fecha Nacimiento</small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white" id="lugarnac" value="#{instructoresBean.lugarNacimiento}">
+                                                <f:selectItems value="#{instructoresBean.parLugarNacimiento.entrySet()}" var="listLn" itemLabel="#{listLn.value}" itemValue="#{listLn.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="lugarnac" class="form-text text-muted white">Lugar Nacimiento</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white" id="gruposang" value="#{instructoresBean.grupoSanguineo}">
+                                                <f:selectItems value="#{instructoresBean.parGrupoSanguineo.entrySet()}" var="listGs" itemLabel="#{listGs.value}" itemValue="#{listGs.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="gruposang" class="form-text text-muted white">Grupo Sanguineo</small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white" id="rh" value="#{instructoresBean.rh}">
+                                                <f:selectItem itemLabel="Positivo" itemValue="Positivo"/>
+                                                <f:selectItem itemLabel="Negativo" itemValue="Negativo"/>
+                                            </h:selectOneMenu>
+                                            <small id="rh" class="form-text text-muted white">RH</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white" id="sexo" value="#{instructoresBean.sexo}">
+                                                <f:selectItems value="#{instructoresBean.parSexo.entrySet()}" var="listSexo" itemLabel="#{listSexo.value}" itemValue="#{listSexo.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="sexo" class="form-text text-muted white"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Telefono" value="#{instructoresBean.telefono}" id="telefono"/>
+                                            <small id="telefono" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="E-mail" value="#{instructoresBean.email}" id="email" maxlength="60"/>
+                                            <small id="email" class="form-text text-muted"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Dirección" value="#{instructoresBean.direccion}" id="direccion"/>
+                                            <small id="direccion" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Celular" value="#{instructoresBean.celular}" id="celular"/>
+                                            <small id="celular" class="form-text text-muted"></small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="accordion">
-                            <!--Esta es la información que se va insertar en la tabla Usuario-->
-                            <h3>Informacion de Usuario</h3>
-                            <div class="desplegar">
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputText class="form-control form-white" a:placeholder="Nombre de Usuario" value="#{instructoresBean.usuNom}" id="usunom"/>
-                                        <small id="usunom" class="form-text text-muted white"></small>
+                            <div id="accordion">
+                                <!--Esta es la información que se va insertar en la tabla Instructores-->
+                                <h3>Informacion Especifica</h3>
+                                <div class="desplegar">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="DD/MM/AAAA"  value="#{instructoresBean.fechaIngresoGim}" id="fechaing">
+                                                <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+                                            </h:inputText>
+                                            <small id="fechaing" class="form-text text-muted white">Fecha Ingreso Gimnasio</small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Código Instructor"  value="#{instructoresBean.codigo}" id="codigo"/>
+                                            <small id="codigo" class="form-text text-muted white"></small>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-6">
-                                        <h:inputSecret class="form-control form-white" a:placeholder="Contraseña" value="#{instructoresBean.usuPass}" id="usupass"/>
-                                        <small id="usupass" class="form-text text-muted white"></small>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white"  id="especialidad" value="#{instructoresBean.especialidad}">
+                                                <f:selectItems value="#{instructoresBean.parEspecialidad.entrySet()}" var="listEs" itemLabel="#{listEs.value}" itemValue="#{listEs.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="especialidad" class="form-text text-muted white">Especialidad</small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white" id="nivelEstudio" value="#{instructoresBean.nivelEstudio}">
+                                                <f:selectItems value="#{instructoresBean.parNivelEstudio.entrySet()}" var="listEst" itemLabel="#{listEst.value}" itemValue="#{listEst.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="nivelEstudio" class="form-text text-muted white">Nivel de Estudio</small>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-lg-6">
-                                        <h:inputSecret class="form-control form-white"  a:placeholder="Confirmar Contraseña" value="#{instructoresBean.usuConpass}" id="usuconpass"/>
-                                        <small id="usuconpass" class="form-text text-muted white"></small>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:selectOneMenu class="form-control form-white" id="nivelNutricion" value="#{instructoresBean.nivelNutricion}">
+                                                <f:selectItems value="#{instructoresBean.parNivelNutricion.entrySet()}" var="listNut" itemLabel="#{listNut.value}" itemValue="#{listNut.key}" />
+                                            </h:selectOneMenu>
+                                            <small id="nivelNutricion" class="form-text text-muted white">Experiencia Nutricional</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="accordion">
+                                <!--Esta es la información que se va insertar en la tabla Usuario-->
+                                <h3>Informacion de Usuario</h3>
+                                <div class="desplegar">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputText class="form-control form-white" a:placeholder="Nombre de Usuario" value="#{instructoresBean.usuNom}" id="usunom"/>
+                                            <small id="usunom" class="form-text text-muted white"></small>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <h:inputSecret class="form-control form-white" a:placeholder="Contraseña" value="#{instructoresBean.usuPass}" id="usupass"/>
+                                            <small id="usupass" class="form-text text-muted white"></small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <h:inputSecret class="form-control form-white"  a:placeholder="Confirmar Contraseña" value="#{instructoresBean.usuConpass}" id="usuconpass"/>
+                                            <small id="usuconpass" class="form-text text-muted white"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <!--Cuando le de click a este boton va a llevarlo al metodo de insertar instructor que esta en el Bean Instructor-->
+                                <h:commandLink action="#{instructoresBean.ingresarInstructor()}" class="btn btn-blue">
+                                    <i class="fa fa-save"/> Guardar
+                                </h:commandLink>
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <!--Cuando le de click a este boton va a llevarlo al metodo de insertar instructor que esta en el Bean Instructor-->
-                            <h:commandLink action="#{instructoresBean.ingresarInstructor()}" class="btn btn-blue">
-                                <i class="fa fa-save"/> Guardar
-                            </h:commandLink>
-                        </div>
-                    </div>
-                </h:form>
-                <!--</c:if>
+                    </h:form>
+                </c:if>
                 <c:if  test="#{val eq false}">
                     <script>
                         document.location.href = '../404.html';
                     </script>
-                </c:if>-->
+                </c:if>
             </ui:define>
 
         </ui:composition>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/05/2017 12:10:36 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.GimInsCli" table="GIM_INS_CLI" schema="ALBERTO" optimistic-lock="version">
+        <comment>TABLA QUE ALMACENA LOS INSTRUCTORES Y LOS CLIENTES QUE TIENEN ASIGNADOS</comment>
+        <composite-id name="id" class="Pojo.GimInsCliId">
+            <key-property name="cliId" type="big_decimal">
+                <column name="CLI_ID" precision="22" scale="0" />
+            </key-property>
+            <key-property name="instId" type="big_decimal">
+                <column name="INST_ID" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="gimCliente" class="Pojo.GimCliente" update="false" insert="false" fetch="select">
+            <column name="CLI_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL CLIENTE QUE TIENE ASIGNADO EL INSTRUCTOR</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="gimInstructor" class="Pojo.GimInstructor" update="false" insert="false" fetch="select">
+            <column name="INST_ID" precision="22" scale="0" not-null="true">
+                <comment>ID DEL INSTRUCTOR QUE TIENE EL CLIENTE ASIGNADO</comment>
+            </column>
+        </many-to-one>
+        <property name="inscliFechaInicial" type="date">
+            <column name="INSCLI_FECHA_INICIAL" length="7" not-null="true">
+                <comment>FECHA EN LA QUE SE LE ASIGNO EL CLIENTE AL INSTRUCTOR</comment>
+            </column>
+        </property>
+        <property name="inscliFechaFinal" type="date">
+            <column name="INSCLI_FECHA_FINAL" length="7">
+                <comment>FECHA EN LA QUE SE CANCELO LA ASIGNACI&#211;N DEL CLIENTE AL INSTRUCTOR</comment>
+            </column>
+        </property>
+        <property name="inscliEstado" type="big_decimal">
+            <column name="INSCLI_ESTADO" precision="22" scale="0" not-null="true">
+                <comment>ESTADO DEL REGISTRO</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -170,11 +170,10 @@ jQuery(function($) {
 	});
         
         
+        
         $('#accordion .desplegar').hide();
-        $('#accordion h3').click(function(){
-            $('#accordion h3').removeClass('white');
+        $('#accordion h3').click(function(){            
             $(this).siblings('.desplegar').slideToggle('fade');
-            $(this).addClass('white');
         });
         
         

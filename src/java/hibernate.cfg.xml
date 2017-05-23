@@ -18,10 +18,12 @@
     <mapping resource="Pojo/GimValoracionDetalle.hbm.xml"/>
     <mapping resource="Pojo/GimInstructor.hbm.xml"/>
     <mapping resource="Pojo/GimPersona.hbm.xml"/>
+    <mapping resource="Pojo/GimPlanCliente.hbm.xml"/>
     <mapping resource="Pojo/GimVideo.hbm.xml"/>
     <mapping resource="Pojo/GimRecurso.hbm.xml"/>
     <mapping resource="Pojo/GimTelefono.hbm.xml"/>
     <mapping resource="Pojo/GimPlanTrabajo.hbm.xml"/>
+    <mapping resource="Pojo/GimInsCli.hbm.xml"/>
     <mapping resource="Pojo/GimAuditoria.hbm.xml"/>
     <mapping resource="Pojo/GimRutObj.hbm.xml"/>
     <mapping resource="Pojo/GimMemUsu.hbm.xml"/>

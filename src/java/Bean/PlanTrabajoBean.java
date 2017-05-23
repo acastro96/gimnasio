@@ -67,6 +67,7 @@ public class PlanTrabajoBean implements Serializable{
         setPlanTrabajoBO(new PlanTrabajoImplBO());
         try {
             getPlanTrabajoBO().llenarParametros(this);
+            getPlanTrabajoBO().cargarPlanCliente(this);
         } catch (Exception e) {
             setCodeMensaje(4);
             setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");
@@ -108,7 +109,6 @@ public class PlanTrabajoBean implements Serializable{
         try {
             setId(id);
             getPlanTrabajoBO().mostrarPlanTrabajo(this);
-            setDetalle(true);
         } catch (Exception e) {
             setCodeMensaje(4);
             setMensaje("Ha ocurrido un error interno, comuniquese con el administrador");

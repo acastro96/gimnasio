@@ -116,7 +116,7 @@ public class LoginImplBO implements LoginBO {
             return null;
         }
         for (GimRecurso rec : listGimRecurso) {
-            listRecurso.add(rec.getRecNombre());
+            listRecurso.add(rec.getRecDescripcion());
         }
         return listRecurso;
     }

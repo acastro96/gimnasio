@@ -25,4 +25,8 @@ public interface ClienteBO {
     
     void llenarParametros (ClientesBean clientesBean) throws Exception;
     
+    void planesDisponibles (ClientesBean clientesBean) throws Exception;
+    
+    void asignarPlan (ClientesBean clientesBean) throws Exception;
+    
 }
